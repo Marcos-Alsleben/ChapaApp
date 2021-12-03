@@ -52,11 +52,12 @@ public class CopiaChapaDAO {
         try {
             //Cria comando sql
             String sql = "update copiachapa set "
-                    +"motivo=?";
+                    +"motivo=? where cod_copchapa=?";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, obj.getMotivo());
+            stmt.setInt(2, obj.getCod_copchapa());
                      
             //Executa o comando sql
             stmt.execute();

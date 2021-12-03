@@ -52,11 +52,12 @@ public class PreImpressaoDAO {
         try {
             //Cria comando sql
             String sql = "update preimpressao set "
-                    +"motivo=?";
+                    +"motivo=? where cod_pre=?";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, obj.getMotivo());
+            stmt.setInt(2, obj.getCod_pre());
                      
             //Executa o comando sql
             stmt.execute();

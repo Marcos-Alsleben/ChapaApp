@@ -52,11 +52,12 @@ public class VendasClienteDAO {
         try {
             //Cria comando sql
             String sql = "update vendascliente set "
-                    +"motivo=?";
+                    +"motivo=? where cod_vend=?";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, obj.getMotivo());
+            stmt.setInt(2, obj.getCod_vend());
                      
             //Executa o comando sql
             stmt.execute();
