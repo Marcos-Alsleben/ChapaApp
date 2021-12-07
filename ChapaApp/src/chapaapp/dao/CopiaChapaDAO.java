@@ -39,6 +39,7 @@ public class CopiaChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
             
@@ -62,6 +63,7 @@ public class CopiaChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
         } catch (Exception erro) {
@@ -73,7 +75,7 @@ public class CopiaChapaDAO {
     public void excluir(CopiaChapa obj){
         try {
             //Cria o comando sql
-            String sql = "delete from copiachapa where id=?";
+            String sql = "delete from copiachapa where cod_copchapa=?";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -82,6 +84,7 @@ public class CopiaChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
         } catch (Exception erro) {
@@ -111,6 +114,7 @@ public class CopiaChapaDAO {
                 //Executa
                 lista.add(obj);
             }
+            con.close();
             return lista;
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Erro:" + erro);

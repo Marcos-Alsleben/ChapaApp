@@ -46,6 +46,7 @@ public class CadastroChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
             
@@ -76,6 +77,7 @@ public class CadastroChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
         } catch (Exception erro) {
@@ -96,6 +98,7 @@ public class CadastroChapaDAO {
             //Executa o comando sql
             stmt.execute();
             stmt.close();
+            con.close();
             
             JOptionPane.showMessageDialog(null, "Excluido com Sucesso!");
         } catch (Exception erro) {
@@ -131,6 +134,7 @@ public class CadastroChapaDAO {
                 //Executa
                 lista.add(obj);
             }
+            con.close();
             return lista;
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(null, "Erro:" + erro);
