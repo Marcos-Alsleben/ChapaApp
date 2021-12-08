@@ -6,10 +6,16 @@
 package chapaapp.view;
 
 import chapaapp.dao.CopiaChapaDAO;
+import chapaapp.dao.ImpressaoDAO;
+import chapaapp.dao.MaquinaDAO;
+import chapaapp.dao.OutrosDAO;
 import chapaapp.dao.PreImpressaoDAO;
 import chapaapp.dao.ProgramacaoDAO;
 import chapaapp.dao.VendasClienteDAO;
 import chapaapp.model.CopiaChapa;
+import chapaapp.model.Impressao;
+import chapaapp.model.Maquina;
+import chapaapp.model.Outros;
 import chapaapp.model.PreImpressao;
 import chapaapp.model.Programacao;
 import chapaapp.model.VendasCliente;
@@ -72,6 +78,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ((DefaultTableCellRenderer) Tb4.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollcopiachapa.getViewport().setBackground(Color.DARK_GRAY);
         tb_copiaChapa.setBackground(Color.DARK_GRAY);
+        
+        JTableHeader Tb5 = tb_impressao.getTableHeader();
+        Tb5.setBackground(Color.black);
+        Tb5.setFont(new Font("Dialog", 1, 12));
+        ((DefaultTableCellRenderer) Tb5.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        jScrollimpressao.getViewport().setBackground(Color.DARK_GRAY);
+        tb_impressao.setBackground(Color.DARK_GRAY);
+        
+        JTableHeader Tb6 = tb_outros.getTableHeader();
+        Tb6.setBackground(Color.black);
+        Tb6.setFont(new Font("Dialog", 1, 12));
+        ((DefaultTableCellRenderer) Tb6.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        jScrolloutros.getViewport().setBackground(Color.DARK_GRAY);
+        tb_outros.setBackground(Color.DARK_GRAY);
+        
+        JTableHeader Tb7 = tb_maquina.getTableHeader();
+        Tb7.setBackground(Color.black);
+        Tb7.setFont(new Font("Dialog", 1, 12));
+        ((DefaultTableCellRenderer) Tb7.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        jScrollmaquina.getViewport().setBackground(Color.DARK_GRAY);
+        tb_maquina.setBackground(Color.DARK_GRAY);
     }
     
     //Metodo listar
@@ -130,6 +157,48 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
     
+    //Metodo listar
+    public void listarImpressao() {
+        ImpressaoDAO dao = new ImpressaoDAO();
+        List<Impressao> lista = dao.listar();
+        DefaultTableModel dados = (DefaultTableModel) tb_impressao.getModel();
+        dados.setNumRows(0);
+        for (Impressao c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_imp(),
+                c.getMotivo(),});
+
+        }
+    }
+    
+    //Metodo listar
+    public void listarOutros() {
+        OutrosDAO dao = new OutrosDAO();
+        List<Outros> lista = dao.listar();
+        DefaultTableModel dados = (DefaultTableModel) tb_outros.getModel();
+        dados.setNumRows(0);
+        for (Outros c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_out(),
+                c.getMotivo(),});
+
+        }
+    }
+    
+    //Metodo listar
+    public void listarMaquina() {
+        MaquinaDAO dao = new MaquinaDAO();
+        List<Maquina> lista = dao.listar();
+        DefaultTableModel dados = (DefaultTableModel) tb_maquina.getModel();
+        dados.setNumRows(0);
+        for (Maquina c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_maq(),
+                c.getNome(),});
+
+        }
+    }
+    
     //limpar campos
     public void LimparVendasCliente() {
         txt_codVend_cad.setText("");
@@ -175,6 +244,42 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_altCopChapa.setEnabled(false);
         btn_exclCopChapa.setEnabled(false);
         btn_limpCopChapa.setEnabled(false);
+
+    }
+    
+    //limpar campos
+    public void LimparImpressao() {
+        txt_codImp_cad.setText("");
+        txt_motivoImp_cad.setText("");
+
+        btn_addImp.setEnabled(false);
+        btn_altImp.setEnabled(false);
+        btn_exclImp.setEnabled(false);
+        btn_limpImp.setEnabled(false);
+
+    }
+    
+    //limpar campos
+    public void LimparOutros() {
+        txt_codOut_cad.setText("");
+        txt_motivoOut_cad.setText("");
+
+        btn_addOut.setEnabled(false);
+        btn_altOut.setEnabled(false);
+        btn_exclOut.setEnabled(false);
+        btn_limpOut.setEnabled(false);
+
+    }
+    
+    //limpar campos
+    public void LimparMaquina() {
+        txt_codMaq_cad.setText("");
+        txt_nomeMaq_cad.setText("");
+
+        btn_addMaq.setEnabled(false);
+        btn_altMaq.setEnabled(false);
+        btn_exclMaq.setEnabled(false);
+        btn_limpMaq.setEnabled(false);
 
     }
     
@@ -263,35 +368,35 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_exclCopChapa = new javax.swing.JButton();
         btn_limpCopChapa = new javax.swing.JButton();
         jPanelImpress = new javax.swing.JPanel();
-        jScrollvendascliente4 = new javax.swing.JScrollPane();
-        tb_vendascliente4 = new javax.swing.JTable();
-        jLabel11 = new javax.swing.JLabel();
-        txt_codVend_cad10 = new javax.swing.JTextField();
-        txt_motivoVend_cad10 = new javax.swing.JTextField();
-        btn_addVend10 = new javax.swing.JButton();
-        btn_altVend10 = new javax.swing.JButton();
-        btn_exclVend10 = new javax.swing.JButton();
-        btn_limpVend10 = new javax.swing.JButton();
+        jScrollimpressao = new javax.swing.JScrollPane();
+        tb_impressao = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        txt_codImp_cad = new javax.swing.JTextField();
+        txt_motivoImp_cad = new javax.swing.JTextField();
+        btn_addImp = new javax.swing.JButton();
+        btn_altImp = new javax.swing.JButton();
+        btn_exclImp = new javax.swing.JButton();
+        btn_limpImp = new javax.swing.JButton();
         jPanelOutros = new javax.swing.JPanel();
-        jScrollvendascliente5 = new javax.swing.JScrollPane();
-        tb_vendascliente5 = new javax.swing.JTable();
+        jScrolloutros = new javax.swing.JScrollPane();
+        tb_outros = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
-        txt_codVend_cad11 = new javax.swing.JTextField();
-        txt_motivoVend_cad11 = new javax.swing.JTextField();
-        btn_addVend11 = new javax.swing.JButton();
-        btn_altVend11 = new javax.swing.JButton();
-        btn_exclVend11 = new javax.swing.JButton();
-        btn_limpVend11 = new javax.swing.JButton();
+        txt_codOut_cad = new javax.swing.JTextField();
+        txt_motivoOut_cad = new javax.swing.JTextField();
+        btn_addOut = new javax.swing.JButton();
+        btn_altOut = new javax.swing.JButton();
+        btn_exclOut = new javax.swing.JButton();
+        btn_limpOut = new javax.swing.JButton();
         jPanelMaquina = new javax.swing.JPanel();
-        jScrollvendascliente6 = new javax.swing.JScrollPane();
-        tb_vendascliente6 = new javax.swing.JTable();
+        jScrollmaquina = new javax.swing.JScrollPane();
+        tb_maquina = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        txt_codVend_cad12 = new javax.swing.JTextField();
-        txt_motivoVend_cad12 = new javax.swing.JTextField();
-        btn_addVend12 = new javax.swing.JButton();
-        btn_altVend12 = new javax.swing.JButton();
-        btn_exclVend12 = new javax.swing.JButton();
-        btn_limpVend12 = new javax.swing.JButton();
+        txt_codMaq_cad = new javax.swing.JTextField();
+        txt_nomeMaq_cad = new javax.swing.JTextField();
+        btn_addMaq = new javax.swing.JButton();
+        btn_altMaq = new javax.swing.JButton();
+        btn_exclMaq = new javax.swing.JButton();
+        btn_limpMaq = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(63, 63, 63));
@@ -311,7 +416,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Conteudo1_64.png"))); // NOI18N
         jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.setBorderPainted(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -329,7 +434,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Conteudo2_64.png"))); // NOI18N
         jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton2.setBorderPainted(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +452,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Conteudo3_64.png"))); // NOI18N
         jButton3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -365,7 +470,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Config_64.png"))); // NOI18N
         jButton4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton4.setBorderPainted(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -487,7 +592,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton5.setText(" Vendas Cliente  ");
         jButton5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton5.setBorderPainted(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -502,7 +607,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton6.setText("  Programação  ");
         jButton6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton6.setBorderPainted(false);
-        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,7 +622,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton7.setText(" Pré-Impressão   ");
         jButton7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton7.setBorderPainted(false);
-        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -532,7 +637,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton8.setText("Cópia de Chapa  ");
         jButton8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton8.setBorderPainted(false);
-        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -547,7 +652,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton9.setText("    Impressão   ");
         jButton9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton9.setBorderPainted(false);
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -562,7 +667,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton10.setText("      Outros   ");
         jButton10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton10.setBorderPainted(false);
-        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -577,7 +682,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jButton11.setText(" Máquina Offset");
         jButton11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton11.setBorderPainted(false);
-        jButton11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton11.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1301,10 +1406,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanelImpress.setBackground(new java.awt.Color(65, 65, 65));
 
-        tb_vendascliente4.setBackground(new java.awt.Color(63, 63, 63));
-        tb_vendascliente4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tb_vendascliente4.setForeground(new java.awt.Color(255, 255, 255));
-        tb_vendascliente4.setModel(new javax.swing.table.DefaultTableModel(
+        tb_impressao.setBackground(new java.awt.Color(63, 63, 63));
+        tb_impressao.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tb_impressao.setForeground(new java.awt.Color(255, 255, 255));
+        tb_impressao.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -1330,98 +1435,98 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tb_vendascliente4.setGridColor(new java.awt.Color(63, 63, 63));
-        tb_vendascliente4.addMouseListener(new java.awt.event.MouseAdapter() {
+        tb_impressao.setGridColor(new java.awt.Color(63, 63, 63));
+        tb_impressao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_vendascliente4MouseClicked(evt);
+                tb_impressaoMouseClicked(evt);
             }
         });
-        jScrollvendascliente4.setViewportView(tb_vendascliente4);
-        if (tb_vendascliente4.getColumnModel().getColumnCount() > 0) {
-            tb_vendascliente4.getColumnModel().getColumn(0).setMinWidth(0);
-            tb_vendascliente4.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tb_vendascliente4.getColumnModel().getColumn(0).setMaxWidth(0);
+        jScrollimpressao.setViewportView(tb_impressao);
+        if (tb_impressao.getColumnModel().getColumnCount() > 0) {
+            tb_impressao.getColumnModel().getColumn(0).setMinWidth(0);
+            tb_impressao.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tb_impressao.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Cadastro Impressão");
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Cadastro Impressão");
 
-        txt_codVend_cad10.setBackground(new java.awt.Color(255, 255, 255, 0));
-        txt_codVend_cad10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_codVend_cad10.setForeground(new java.awt.Color(255, 255, 255));
-        txt_codVend_cad10.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txt_codVend_cad10.setBorder(null);
-        txt_codVend_cad10.setEnabled(false);
+        txt_codImp_cad.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codImp_cad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_codImp_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codImp_cad.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_codImp_cad.setBorder(null);
+        txt_codImp_cad.setEnabled(false);
 
-        txt_motivoVend_cad10.setBackground(new java.awt.Color(63, 63, 63));
-        txt_motivoVend_cad10.setForeground(new java.awt.Color(255, 255, 255));
-        txt_motivoVend_cad10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_motivoVend_cad10.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_motivoImp_cad.setBackground(new java.awt.Color(63, 63, 63));
+        txt_motivoImp_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_motivoImp_cad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_motivoImp_cad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_motivoVend_cad10KeyPressed(evt);
+                txt_motivoImp_cadKeyPressed(evt);
             }
         });
 
-        btn_addVend10.setBackground(new java.awt.Color(22, 22, 22));
-        btn_addVend10.setForeground(new java.awt.Color(255, 255, 255));
-        btn_addVend10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
-        btn_addVend10.setToolTipText("Adicionar novo!");
-        btn_addVend10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_addVend10.setBorderPainted(false);
-        btn_addVend10.setEnabled(false);
-        btn_addVend10.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_addVend10.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_addVend10.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_addVend10.addActionListener(new java.awt.event.ActionListener() {
+        btn_addImp.setBackground(new java.awt.Color(22, 22, 22));
+        btn_addImp.setForeground(new java.awt.Color(255, 255, 255));
+        btn_addImp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
+        btn_addImp.setToolTipText("Adicionar novo!");
+        btn_addImp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_addImp.setBorderPainted(false);
+        btn_addImp.setEnabled(false);
+        btn_addImp.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_addImp.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_addImp.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_addImp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addVend10ActionPerformed(evt);
+                btn_addImpActionPerformed(evt);
             }
         });
 
-        btn_altVend10.setBackground(new java.awt.Color(22, 22, 22));
-        btn_altVend10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
-        btn_altVend10.setToolTipText("Alterar!");
-        btn_altVend10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_altVend10.setBorderPainted(false);
-        btn_altVend10.setEnabled(false);
-        btn_altVend10.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_altVend10.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_altVend10.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_altVend10.addActionListener(new java.awt.event.ActionListener() {
+        btn_altImp.setBackground(new java.awt.Color(22, 22, 22));
+        btn_altImp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
+        btn_altImp.setToolTipText("Alterar!");
+        btn_altImp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_altImp.setBorderPainted(false);
+        btn_altImp.setEnabled(false);
+        btn_altImp.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_altImp.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_altImp.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_altImp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_altVend10ActionPerformed(evt);
+                btn_altImpActionPerformed(evt);
             }
         });
 
-        btn_exclVend10.setBackground(new java.awt.Color(22, 22, 22));
-        btn_exclVend10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
-        btn_exclVend10.setToolTipText("Excluir!");
-        btn_exclVend10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_exclVend10.setBorderPainted(false);
-        btn_exclVend10.setEnabled(false);
-        btn_exclVend10.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend10.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend10.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_exclVend10.addActionListener(new java.awt.event.ActionListener() {
+        btn_exclImp.setBackground(new java.awt.Color(22, 22, 22));
+        btn_exclImp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
+        btn_exclImp.setToolTipText("Excluir!");
+        btn_exclImp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_exclImp.setBorderPainted(false);
+        btn_exclImp.setEnabled(false);
+        btn_exclImp.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_exclImp.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_exclImp.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_exclImp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exclVend10ActionPerformed(evt);
+                btn_exclImpActionPerformed(evt);
             }
         });
 
-        btn_limpVend10.setBackground(new java.awt.Color(22, 22, 22));
-        btn_limpVend10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
-        btn_limpVend10.setToolTipText("Limpar!");
-        btn_limpVend10.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_limpVend10.setBorderPainted(false);
-        btn_limpVend10.setEnabled(false);
-        btn_limpVend10.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend10.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend10.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_limpVend10.addActionListener(new java.awt.event.ActionListener() {
+        btn_limpImp.setBackground(new java.awt.Color(22, 22, 22));
+        btn_limpImp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
+        btn_limpImp.setToolTipText("Limpar!");
+        btn_limpImp.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_limpImp.setBorderPainted(false);
+        btn_limpImp.setEnabled(false);
+        btn_limpImp.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_limpImp.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_limpImp.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_limpImp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_limpVend10ActionPerformed(evt);
+                btn_limpImpActionPerformed(evt);
             }
         });
 
@@ -1430,37 +1535,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelImpressLayout.setHorizontalGroup(
             jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelImpressLayout.createSequentialGroup()
-                .addComponent(jScrollvendascliente4, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollimpressao, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImpressLayout.createSequentialGroup()
-                        .addComponent(btn_addVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_addImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_altVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_altImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_exclVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_exclImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_limpVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_motivoVend_cad10)
-                    .addComponent(txt_codVend_cad10)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btn_limpImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_motivoImp_cad)
+                    .addComponent(txt_codImp_cad)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelImpressLayout.setVerticalGroup(
             jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollvendascliente4, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
             .addGroup(jPanelImpressLayout.createSequentialGroup()
-                .addComponent(jLabel11)
+                .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_codVend_cad10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_codImp_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_motivoVend_cad10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_motivoImp_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_altVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_exclVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_limpVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_addVend10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_altImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_exclImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_limpImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_addImp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1469,10 +1574,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanelOutros.setBackground(new java.awt.Color(65, 65, 65));
 
-        tb_vendascliente5.setBackground(new java.awt.Color(63, 63, 63));
-        tb_vendascliente5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tb_vendascliente5.setForeground(new java.awt.Color(255, 255, 255));
-        tb_vendascliente5.setModel(new javax.swing.table.DefaultTableModel(
+        tb_outros.setBackground(new java.awt.Color(63, 63, 63));
+        tb_outros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tb_outros.setForeground(new java.awt.Color(255, 255, 255));
+        tb_outros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -1498,17 +1603,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tb_vendascliente5.setGridColor(new java.awt.Color(63, 63, 63));
-        tb_vendascliente5.addMouseListener(new java.awt.event.MouseAdapter() {
+        tb_outros.setGridColor(new java.awt.Color(63, 63, 63));
+        tb_outros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_vendascliente5MouseClicked(evt);
+                tb_outrosMouseClicked(evt);
             }
         });
-        jScrollvendascliente5.setViewportView(tb_vendascliente5);
-        if (tb_vendascliente5.getColumnModel().getColumnCount() > 0) {
-            tb_vendascliente5.getColumnModel().getColumn(0).setMinWidth(0);
-            tb_vendascliente5.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tb_vendascliente5.getColumnModel().getColumn(0).setMaxWidth(0);
+        jScrolloutros.setViewportView(tb_outros);
+        if (tb_outros.getColumnModel().getColumnCount() > 0) {
+            tb_outros.getColumnModel().getColumn(0).setMinWidth(0);
+            tb_outros.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tb_outros.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1516,80 +1621,80 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Cadastro Outros");
 
-        txt_codVend_cad11.setBackground(new java.awt.Color(255, 255, 255, 0));
-        txt_codVend_cad11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_codVend_cad11.setForeground(new java.awt.Color(255, 255, 255));
-        txt_codVend_cad11.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txt_codVend_cad11.setBorder(null);
-        txt_codVend_cad11.setEnabled(false);
+        txt_codOut_cad.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codOut_cad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_codOut_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codOut_cad.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_codOut_cad.setBorder(null);
+        txt_codOut_cad.setEnabled(false);
 
-        txt_motivoVend_cad11.setBackground(new java.awt.Color(63, 63, 63));
-        txt_motivoVend_cad11.setForeground(new java.awt.Color(255, 255, 255));
-        txt_motivoVend_cad11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_motivoVend_cad11.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_motivoOut_cad.setBackground(new java.awt.Color(63, 63, 63));
+        txt_motivoOut_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_motivoOut_cad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_motivoOut_cad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_motivoVend_cad11KeyPressed(evt);
+                txt_motivoOut_cadKeyPressed(evt);
             }
         });
 
-        btn_addVend11.setBackground(new java.awt.Color(22, 22, 22));
-        btn_addVend11.setForeground(new java.awt.Color(255, 255, 255));
-        btn_addVend11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
-        btn_addVend11.setToolTipText("Adicionar novo!");
-        btn_addVend11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_addVend11.setBorderPainted(false);
-        btn_addVend11.setEnabled(false);
-        btn_addVend11.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_addVend11.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_addVend11.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_addVend11.addActionListener(new java.awt.event.ActionListener() {
+        btn_addOut.setBackground(new java.awt.Color(22, 22, 22));
+        btn_addOut.setForeground(new java.awt.Color(255, 255, 255));
+        btn_addOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
+        btn_addOut.setToolTipText("Adicionar novo!");
+        btn_addOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_addOut.setBorderPainted(false);
+        btn_addOut.setEnabled(false);
+        btn_addOut.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_addOut.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_addOut.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_addOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addVend11ActionPerformed(evt);
+                btn_addOutActionPerformed(evt);
             }
         });
 
-        btn_altVend11.setBackground(new java.awt.Color(22, 22, 22));
-        btn_altVend11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
-        btn_altVend11.setToolTipText("Alterar!");
-        btn_altVend11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_altVend11.setBorderPainted(false);
-        btn_altVend11.setEnabled(false);
-        btn_altVend11.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_altVend11.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_altVend11.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_altVend11.addActionListener(new java.awt.event.ActionListener() {
+        btn_altOut.setBackground(new java.awt.Color(22, 22, 22));
+        btn_altOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
+        btn_altOut.setToolTipText("Alterar!");
+        btn_altOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_altOut.setBorderPainted(false);
+        btn_altOut.setEnabled(false);
+        btn_altOut.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_altOut.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_altOut.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_altOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_altVend11ActionPerformed(evt);
+                btn_altOutActionPerformed(evt);
             }
         });
 
-        btn_exclVend11.setBackground(new java.awt.Color(22, 22, 22));
-        btn_exclVend11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
-        btn_exclVend11.setToolTipText("Excluir!");
-        btn_exclVend11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_exclVend11.setBorderPainted(false);
-        btn_exclVend11.setEnabled(false);
-        btn_exclVend11.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend11.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend11.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_exclVend11.addActionListener(new java.awt.event.ActionListener() {
+        btn_exclOut.setBackground(new java.awt.Color(22, 22, 22));
+        btn_exclOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
+        btn_exclOut.setToolTipText("Excluir!");
+        btn_exclOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_exclOut.setBorderPainted(false);
+        btn_exclOut.setEnabled(false);
+        btn_exclOut.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_exclOut.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_exclOut.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_exclOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exclVend11ActionPerformed(evt);
+                btn_exclOutActionPerformed(evt);
             }
         });
 
-        btn_limpVend11.setBackground(new java.awt.Color(22, 22, 22));
-        btn_limpVend11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
-        btn_limpVend11.setToolTipText("Limpar!");
-        btn_limpVend11.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_limpVend11.setBorderPainted(false);
-        btn_limpVend11.setEnabled(false);
-        btn_limpVend11.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend11.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend11.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_limpVend11.addActionListener(new java.awt.event.ActionListener() {
+        btn_limpOut.setBackground(new java.awt.Color(22, 22, 22));
+        btn_limpOut.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
+        btn_limpOut.setToolTipText("Limpar!");
+        btn_limpOut.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_limpOut.setBorderPainted(false);
+        btn_limpOut.setEnabled(false);
+        btn_limpOut.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_limpOut.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_limpOut.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_limpOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_limpVend11ActionPerformed(evt);
+                btn_limpOutActionPerformed(evt);
             }
         });
 
@@ -1598,37 +1703,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelOutrosLayout.setHorizontalGroup(
             jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelOutrosLayout.createSequentialGroup()
-                .addComponent(jScrollvendascliente5, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrolloutros, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelOutrosLayout.createSequentialGroup()
-                        .addComponent(btn_addVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_addOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_altVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_altOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_exclVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_exclOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_limpVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_motivoVend_cad11)
-                    .addComponent(txt_codVend_cad11)
+                        .addComponent(btn_limpOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_motivoOut_cad)
+                    .addComponent(txt_codOut_cad)
                     .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelOutrosLayout.setVerticalGroup(
             jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollvendascliente5, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrolloutros, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
             .addGroup(jPanelOutrosLayout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_codVend_cad11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_codOut_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_motivoVend_cad11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_motivoOut_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_altVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_exclVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_limpVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_addVend11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_altOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_exclOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_limpOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_addOut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1637,10 +1742,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanelMaquina.setBackground(new java.awt.Color(65, 65, 65));
 
-        tb_vendascliente6.setBackground(new java.awt.Color(63, 63, 63));
-        tb_vendascliente6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tb_vendascliente6.setForeground(new java.awt.Color(255, 255, 255));
-        tb_vendascliente6.setModel(new javax.swing.table.DefaultTableModel(
+        tb_maquina.setBackground(new java.awt.Color(63, 63, 63));
+        tb_maquina.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tb_maquina.setForeground(new java.awt.Color(255, 255, 255));
+        tb_maquina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -1666,17 +1771,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tb_vendascliente6.setGridColor(new java.awt.Color(63, 63, 63));
-        tb_vendascliente6.addMouseListener(new java.awt.event.MouseAdapter() {
+        tb_maquina.setGridColor(new java.awt.Color(63, 63, 63));
+        tb_maquina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tb_vendascliente6MouseClicked(evt);
+                tb_maquinaMouseClicked(evt);
             }
         });
-        jScrollvendascliente6.setViewportView(tb_vendascliente6);
-        if (tb_vendascliente6.getColumnModel().getColumnCount() > 0) {
-            tb_vendascliente6.getColumnModel().getColumn(0).setMinWidth(0);
-            tb_vendascliente6.getColumnModel().getColumn(0).setPreferredWidth(0);
-            tb_vendascliente6.getColumnModel().getColumn(0).setMaxWidth(0);
+        jScrollmaquina.setViewportView(tb_maquina);
+        if (tb_maquina.getColumnModel().getColumnCount() > 0) {
+            tb_maquina.getColumnModel().getColumn(0).setMinWidth(0);
+            tb_maquina.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tb_maquina.getColumnModel().getColumn(0).setMaxWidth(0);
         }
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1684,80 +1789,80 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Cadastro Máquina Offset");
 
-        txt_codVend_cad12.setBackground(new java.awt.Color(255, 255, 255, 0));
-        txt_codVend_cad12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_codVend_cad12.setForeground(new java.awt.Color(255, 255, 255));
-        txt_codVend_cad12.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txt_codVend_cad12.setBorder(null);
-        txt_codVend_cad12.setEnabled(false);
+        txt_codMaq_cad.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codMaq_cad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_codMaq_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codMaq_cad.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txt_codMaq_cad.setBorder(null);
+        txt_codMaq_cad.setEnabled(false);
 
-        txt_motivoVend_cad12.setBackground(new java.awt.Color(63, 63, 63));
-        txt_motivoVend_cad12.setForeground(new java.awt.Color(255, 255, 255));
-        txt_motivoVend_cad12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_motivoVend_cad12.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_nomeMaq_cad.setBackground(new java.awt.Color(63, 63, 63));
+        txt_nomeMaq_cad.setForeground(new java.awt.Color(255, 255, 255));
+        txt_nomeMaq_cad.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_nomeMaq_cad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_motivoVend_cad12KeyPressed(evt);
+                txt_nomeMaq_cadKeyPressed(evt);
             }
         });
 
-        btn_addVend12.setBackground(new java.awt.Color(22, 22, 22));
-        btn_addVend12.setForeground(new java.awt.Color(255, 255, 255));
-        btn_addVend12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
-        btn_addVend12.setToolTipText("Adicionar novo!");
-        btn_addVend12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_addVend12.setBorderPainted(false);
-        btn_addVend12.setEnabled(false);
-        btn_addVend12.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_addVend12.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_addVend12.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_addVend12.addActionListener(new java.awt.event.ActionListener() {
+        btn_addMaq.setBackground(new java.awt.Color(22, 22, 22));
+        btn_addMaq.setForeground(new java.awt.Color(255, 255, 255));
+        btn_addMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
+        btn_addMaq.setToolTipText("Adicionar novo!");
+        btn_addMaq.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_addMaq.setBorderPainted(false);
+        btn_addMaq.setEnabled(false);
+        btn_addMaq.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_addMaq.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_addMaq.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_addMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_addVend12ActionPerformed(evt);
+                btn_addMaqActionPerformed(evt);
             }
         });
 
-        btn_altVend12.setBackground(new java.awt.Color(22, 22, 22));
-        btn_altVend12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
-        btn_altVend12.setToolTipText("Alterar!");
-        btn_altVend12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_altVend12.setBorderPainted(false);
-        btn_altVend12.setEnabled(false);
-        btn_altVend12.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_altVend12.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_altVend12.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_altVend12.addActionListener(new java.awt.event.ActionListener() {
+        btn_altMaq.setBackground(new java.awt.Color(22, 22, 22));
+        btn_altMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
+        btn_altMaq.setToolTipText("Alterar!");
+        btn_altMaq.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_altMaq.setBorderPainted(false);
+        btn_altMaq.setEnabled(false);
+        btn_altMaq.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_altMaq.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_altMaq.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_altMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_altVend12ActionPerformed(evt);
+                btn_altMaqActionPerformed(evt);
             }
         });
 
-        btn_exclVend12.setBackground(new java.awt.Color(22, 22, 22));
-        btn_exclVend12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
-        btn_exclVend12.setToolTipText("Excluir!");
-        btn_exclVend12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_exclVend12.setBorderPainted(false);
-        btn_exclVend12.setEnabled(false);
-        btn_exclVend12.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend12.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_exclVend12.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_exclVend12.addActionListener(new java.awt.event.ActionListener() {
+        btn_exclMaq.setBackground(new java.awt.Color(22, 22, 22));
+        btn_exclMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
+        btn_exclMaq.setToolTipText("Excluir!");
+        btn_exclMaq.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_exclMaq.setBorderPainted(false);
+        btn_exclMaq.setEnabled(false);
+        btn_exclMaq.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_exclMaq.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_exclMaq.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_exclMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exclVend12ActionPerformed(evt);
+                btn_exclMaqActionPerformed(evt);
             }
         });
 
-        btn_limpVend12.setBackground(new java.awt.Color(22, 22, 22));
-        btn_limpVend12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
-        btn_limpVend12.setToolTipText("Limpar!");
-        btn_limpVend12.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_limpVend12.setBorderPainted(false);
-        btn_limpVend12.setEnabled(false);
-        btn_limpVend12.setMaximumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend12.setMinimumSize(new java.awt.Dimension(40, 40));
-        btn_limpVend12.setPreferredSize(new java.awt.Dimension(40, 40));
-        btn_limpVend12.addActionListener(new java.awt.event.ActionListener() {
+        btn_limpMaq.setBackground(new java.awt.Color(22, 22, 22));
+        btn_limpMaq.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
+        btn_limpMaq.setToolTipText("Limpar!");
+        btn_limpMaq.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_limpMaq.setBorderPainted(false);
+        btn_limpMaq.setEnabled(false);
+        btn_limpMaq.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_limpMaq.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_limpMaq.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_limpMaq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_limpVend12ActionPerformed(evt);
+                btn_limpMaqActionPerformed(evt);
             }
         });
 
@@ -1766,37 +1871,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelMaquinaLayout.setHorizontalGroup(
             jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelMaquinaLayout.createSequentialGroup()
-                .addComponent(jScrollvendascliente6, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollmaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMaquinaLayout.createSequentialGroup()
-                        .addComponent(btn_addVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_addMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_altVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_altMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_exclVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_exclMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_limpVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_motivoVend_cad12)
-                    .addComponent(txt_codVend_cad12)
+                        .addComponent(btn_limpMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nomeMaq_cad)
+                    .addComponent(txt_codMaq_cad)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelMaquinaLayout.setVerticalGroup(
             jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollvendascliente6, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollmaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
             .addGroup(jPanelMaquinaLayout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_codVend_cad12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_codMaq_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_motivoVend_cad12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_nomeMaq_cad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_altVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_exclVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_limpVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_addVend12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_altMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_exclMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_limpMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_addMaq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1997,6 +2102,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         listarProgramacao();
         listarPreImpressao();
         listarCopiaChapa();
+        listarImpressao();
+        listarOutros();
+        listarMaquina();
     }//GEN-LAST:event_formWindowActivated
 
     private void tb_programacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_programacaoMouseClicked
@@ -2059,17 +2167,65 @@ public class FrmPrincipal extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_tb_copiaChapaMouseClicked
 
-    private void tb_vendascliente4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_vendascliente4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tb_vendascliente4MouseClicked
+    private void tb_impressaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_impressaoMouseClicked
+        
+        tb_impressao.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    String c0 = tb_impressao.getValueAt(tb_impressao.getSelectedRow(), 0).toString();
+                    String c1 = tb_impressao.getValueAt(tb_impressao.getSelectedRow(), 1).toString();
 
-    private void tb_vendascliente5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_vendascliente5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tb_vendascliente5MouseClicked
+                    txt_codImp_cad.setText(c0);
+                    txt_motivoImp_cad.setText(c1);
 
-    private void tb_vendascliente6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_vendascliente6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tb_vendascliente6MouseClicked
+                    btn_addImp.setEnabled(false);
+                    btn_exclImp.setEnabled(true);
+                    btn_altImp.setEnabled(true);
+                    btn_limpImp.setEnabled(true);
+                }
+            }
+        });
+    }//GEN-LAST:event_tb_impressaoMouseClicked
+
+    private void tb_outrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_outrosMouseClicked
+        
+        tb_outros.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    String c0 = tb_outros.getValueAt(tb_outros.getSelectedRow(), 0).toString();
+                    String c1 = tb_outros.getValueAt(tb_outros.getSelectedRow(), 1).toString();
+
+                    txt_codOut_cad.setText(c0);
+                    txt_motivoOut_cad.setText(c1);
+
+                    btn_addOut.setEnabled(false);
+                    btn_exclOut.setEnabled(true);
+                    btn_altOut.setEnabled(true);
+                    btn_limpOut.setEnabled(true);
+                }
+            }
+        });
+    }//GEN-LAST:event_tb_outrosMouseClicked
+
+    private void tb_maquinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_maquinaMouseClicked
+        
+        tb_maquina.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    String c0 = tb_maquina.getValueAt(tb_maquina.getSelectedRow(), 0).toString();
+                    String c1 = tb_maquina.getValueAt(tb_maquina.getSelectedRow(), 1).toString();
+
+                    txt_codMaq_cad.setText(c0);
+                    txt_nomeMaq_cad.setText(c1);
+
+                    btn_addMaq.setEnabled(false);
+                    btn_exclMaq.setEnabled(true);
+                    btn_altMaq.setEnabled(true);
+                    btn_limpMaq.setEnabled(true);
+                }
+            }
+        });
+    }//GEN-LAST:event_tb_maquinaMouseClicked
 
     private void txt_motivoProg_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoProg_cadKeyPressed
        
@@ -2264,65 +2420,197 @@ public class FrmPrincipal extends javax.swing.JFrame {
         LimparCopiaChapa();
     }//GEN-LAST:event_btn_limpCopChapaActionPerformed
 
-    private void txt_motivoVend_cad10KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoVend_cad10KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_motivoVend_cad10KeyPressed
+    private void txt_motivoOut_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoOut_cadKeyPressed
+      
+        if ("".equals(txt_codOut_cad.getText())) {
+            btn_addOut.setEnabled(true);
+            btn_altOut.setEnabled(false);
+            btn_exclOut.setEnabled(false);
+            btn_limpOut.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_motivoOut_cadKeyPressed
 
-    private void btn_addVend10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addVend10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_addVend10ActionPerformed
+    private void btn_addOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addOutActionPerformed
+        
+        Outros obj = new Outros();
 
-    private void btn_altVend10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altVend10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_altVend10ActionPerformed
+        obj.setMotivo(txt_motivoOut_cad.getText());
 
-    private void btn_exclVend10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclVend10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_exclVend10ActionPerformed
+        OutrosDAO dao = new OutrosDAO();
+        dao.cadastrar(obj);
 
-    private void btn_limpVend10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpVend10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_limpVend10ActionPerformed
+        LimparOutros();
 
-    private void txt_motivoVend_cad11KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoVend_cad11KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_motivoVend_cad11KeyPressed
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_addOutActionPerformed
 
-    private void btn_addVend11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addVend11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_addVend11ActionPerformed
+    private void btn_altOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altOutActionPerformed
+        
+        Outros obj = new Outros();
 
-    private void btn_altVend11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altVend11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_altVend11ActionPerformed
+        obj.setMotivo(txt_motivoOut_cad.getText());
+        obj.setCod_out(Integer.parseInt(txt_codOut_cad.getText()));
+        OutrosDAO dao = new OutrosDAO();
+        dao.alterar(obj);
 
-    private void btn_exclVend11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclVend11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_exclVend11ActionPerformed
+        LimparOutros();
 
-    private void btn_limpVend11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpVend11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_limpVend11ActionPerformed
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_altOutActionPerformed
 
-    private void txt_motivoVend_cad12KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoVend_cad12KeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_motivoVend_cad12KeyPressed
+    private void btn_exclOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclOutActionPerformed
+        
+        String mt = txt_motivoOut_cad.getText();
+        int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
-    private void btn_addVend12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addVend12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_addVend12ActionPerformed
+        if (resposta == 0) {
 
-    private void btn_altVend12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altVend12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_altVend12ActionPerformed
+            Outros obj = new Outros();
 
-    private void btn_exclVend12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclVend12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_exclVend12ActionPerformed
+            obj.setCod_out(Integer.parseInt(txt_codOut_cad.getText()));
 
-    private void btn_limpVend12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpVend12ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_limpVend12ActionPerformed
+            OutrosDAO dao = new OutrosDAO();
+
+            dao.excluir(obj);
+
+            LimparOutros();
+
+            //AtualizarcbClientes();
+        }
+    }//GEN-LAST:event_btn_exclOutActionPerformed
+
+    private void btn_limpOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpOutActionPerformed
+        
+        LimparOutros();
+    }//GEN-LAST:event_btn_limpOutActionPerformed
+
+    private void txt_nomeMaq_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nomeMaq_cadKeyPressed
+        
+        if ("".equals(txt_codMaq_cad.getText())) {
+            btn_addMaq.setEnabled(true);
+            btn_altMaq.setEnabled(false);
+            btn_exclMaq.setEnabled(false);
+            btn_limpMaq.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_nomeMaq_cadKeyPressed
+
+    private void btn_addMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addMaqActionPerformed
+        
+        Maquina obj = new Maquina();
+
+        obj.setNome(txt_nomeMaq_cad.getText());
+
+        MaquinaDAO dao = new MaquinaDAO();
+        dao.cadastrar(obj);
+
+        LimparMaquina();
+
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_addMaqActionPerformed
+
+    private void btn_altMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altMaqActionPerformed
+        
+        Maquina obj = new Maquina();
+
+        obj.setNome(txt_nomeMaq_cad.getText());
+        obj.setCod_maq(Integer.parseInt(txt_codMaq_cad.getText()));
+        MaquinaDAO dao = new MaquinaDAO();
+        dao.alterar(obj);
+
+        LimparMaquina();
+
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_altMaqActionPerformed
+
+    private void btn_exclMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclMaqActionPerformed
+        
+        String mt = txt_nomeMaq_cad.getText();
+        int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
+
+        if (resposta == 0) {
+
+            Maquina obj = new Maquina();
+
+            obj.setCod_maq(Integer.parseInt(txt_codMaq_cad.getText()));
+
+            MaquinaDAO dao = new MaquinaDAO();
+
+            dao.excluir(obj);
+
+            LimparMaquina();
+
+            //AtualizarcbClientes();
+        }
+    }//GEN-LAST:event_btn_exclMaqActionPerformed
+
+    private void btn_limpMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpMaqActionPerformed
+        
+        LimparMaquina();
+    }//GEN-LAST:event_btn_limpMaqActionPerformed
+
+    private void txt_motivoImp_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoImp_cadKeyPressed
+        
+        if ("".equals(txt_codImp_cad.getText())) {
+            btn_addImp.setEnabled(true);
+            btn_altImp.setEnabled(false);
+            btn_exclImp.setEnabled(false);
+            btn_limpImp.setEnabled(true);
+        }
+    }//GEN-LAST:event_txt_motivoImp_cadKeyPressed
+
+    private void btn_addImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addImpActionPerformed
+        
+        Impressao obj = new Impressao();
+
+        obj.setMotivo(txt_motivoImp_cad.getText());
+
+        ImpressaoDAO dao = new ImpressaoDAO();
+        dao.cadastrar(obj);
+
+        LimparImpressao();
+
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_addImpActionPerformed
+
+    private void btn_altImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altImpActionPerformed
+        
+        Impressao obj = new Impressao();
+
+        obj.setMotivo(txt_motivoImp_cad.getText());
+        obj.setCod_imp(Integer.parseInt(txt_codImp_cad.getText()));
+        ImpressaoDAO dao = new ImpressaoDAO();
+        dao.alterar(obj);
+
+        LimparImpressao();
+
+        //AtualizarcbClientes();
+    }//GEN-LAST:event_btn_altImpActionPerformed
+
+    private void btn_exclImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclImpActionPerformed
+        
+        String mt = txt_motivoImp_cad.getText();
+        int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
+
+        if (resposta == 0) {
+
+            Impressao obj = new Impressao();
+
+            obj.setCod_imp(Integer.parseInt(txt_codImp_cad.getText()));
+
+            ImpressaoDAO dao = new ImpressaoDAO();
+
+            dao.excluir(obj);
+
+            LimparImpressao();
+
+            //AtualizarcbClientes();
+        }
+    }//GEN-LAST:event_btn_exclImpActionPerformed
+
+    private void btn_limpImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpImpActionPerformed
+        
+        LimparImpressao();
+    }//GEN-LAST:event_btn_limpImpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2361,33 +2649,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addCopChapa;
+    private javax.swing.JButton btn_addImp;
+    private javax.swing.JButton btn_addMaq;
+    private javax.swing.JButton btn_addOut;
     private javax.swing.JButton btn_addPre;
     private javax.swing.JButton btn_addProg;
     private javax.swing.JButton btn_addVend;
-    private javax.swing.JButton btn_addVend10;
-    private javax.swing.JButton btn_addVend11;
-    private javax.swing.JButton btn_addVend12;
     private javax.swing.JButton btn_altCopChapa;
+    private javax.swing.JButton btn_altImp;
+    private javax.swing.JButton btn_altMaq;
+    private javax.swing.JButton btn_altOut;
     private javax.swing.JButton btn_altPre;
     private javax.swing.JButton btn_altProg;
     private javax.swing.JButton btn_altVend;
-    private javax.swing.JButton btn_altVend10;
-    private javax.swing.JButton btn_altVend11;
-    private javax.swing.JButton btn_altVend12;
     private javax.swing.JButton btn_exclCopChapa;
+    private javax.swing.JButton btn_exclImp;
+    private javax.swing.JButton btn_exclMaq;
+    private javax.swing.JButton btn_exclOut;
     private javax.swing.JButton btn_exclPre;
     private javax.swing.JButton btn_exclProg;
     private javax.swing.JButton btn_exclVend;
-    private javax.swing.JButton btn_exclVend10;
-    private javax.swing.JButton btn_exclVend11;
-    private javax.swing.JButton btn_exclVend12;
     private javax.swing.JButton btn_limpCopChapa;
+    private javax.swing.JButton btn_limpImp;
+    private javax.swing.JButton btn_limpMaq;
+    private javax.swing.JButton btn_limpOut;
     private javax.swing.JButton btn_limpPre;
     private javax.swing.JButton btn_limpProg;
     private javax.swing.JButton btn_limpVend;
-    private javax.swing.JButton btn_limpVend10;
-    private javax.swing.JButton btn_limpVend11;
-    private javax.swing.JButton btn_limpVend12;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -2401,9 +2689,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -2427,32 +2715,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRegrav;
     private javax.swing.JPanel jPanelVendas;
     private javax.swing.JScrollPane jScrollcopiachapa;
+    private javax.swing.JScrollPane jScrollimpressao;
+    private javax.swing.JScrollPane jScrollmaquina;
+    private javax.swing.JScrollPane jScrolloutros;
     private javax.swing.JScrollPane jScrollpreimpressao;
     private javax.swing.JScrollPane jScrollprogramacao;
     private javax.swing.JScrollPane jScrollvendascliente;
-    private javax.swing.JScrollPane jScrollvendascliente4;
-    private javax.swing.JScrollPane jScrollvendascliente5;
-    private javax.swing.JScrollPane jScrollvendascliente6;
     private javax.swing.JTable tb_copiaChapa;
+    private javax.swing.JTable tb_impressao;
+    private javax.swing.JTable tb_maquina;
+    private javax.swing.JTable tb_outros;
     private javax.swing.JTable tb_preImpressao;
     private javax.swing.JTable tb_programacao;
     private javax.swing.JTable tb_vendascliente;
-    private javax.swing.JTable tb_vendascliente4;
-    private javax.swing.JTable tb_vendascliente5;
-    private javax.swing.JTable tb_vendascliente6;
     private javax.swing.JTextField txt_codCopChapa_cad;
+    private javax.swing.JTextField txt_codImp_cad;
+    private javax.swing.JTextField txt_codMaq_cad;
+    private javax.swing.JTextField txt_codOut_cad;
     private javax.swing.JTextField txt_codPre_cad;
     private javax.swing.JTextField txt_codProg_cad;
     private javax.swing.JTextField txt_codVend_cad;
-    private javax.swing.JTextField txt_codVend_cad10;
-    private javax.swing.JTextField txt_codVend_cad11;
-    private javax.swing.JTextField txt_codVend_cad12;
     private javax.swing.JTextField txt_motivoCopChapa_cad;
+    private javax.swing.JTextField txt_motivoImp_cad;
+    private javax.swing.JTextField txt_motivoOut_cad;
     private javax.swing.JTextField txt_motivoPre_cad;
     private javax.swing.JTextField txt_motivoProg_cad;
     private javax.swing.JTextField txt_motivoVend_cad;
-    private javax.swing.JTextField txt_motivoVend_cad10;
-    private javax.swing.JTextField txt_motivoVend_cad11;
-    private javax.swing.JTextField txt_motivoVend_cad12;
+    private javax.swing.JTextField txt_nomeMaq_cad;
     // End of variables declaration//GEN-END:variables
 }

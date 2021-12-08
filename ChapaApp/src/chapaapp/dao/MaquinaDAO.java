@@ -30,7 +30,7 @@ public class MaquinaDAO {
     public void cadastrar(Maquina obj){
         try {
             //Cria comando sql
-            String sql = "insert into maquina (motivo) values (?)";
+            String sql = "insert into maquina (nome) values (?)";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -53,12 +53,12 @@ public class MaquinaDAO {
         try {
             //Cria comando sql
             String sql = "update maquina set "
-                    +"motivo=? where cod_maq=?";
+                    +"nome=? where cod_maq=?";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, obj.getNome());
-            stmt.setInt(1, obj.getCod_maq());
+            stmt.setInt(2, obj.getCod_maq());
                      
             //Executa o comando sql
             stmt.execute();

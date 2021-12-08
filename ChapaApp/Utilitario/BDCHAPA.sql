@@ -45,11 +45,11 @@ Insert into copiachapa (motivo) values
 ('Chapa arranhada'), ('Sugeira no cilindro');
 
 /***** TABELA *****/
-CREATE TABLE impressão (
+CREATE TABLE impressao (
   cod_imp int auto_increment primary key,
   motivo varchar (50)
   );
-  Insert into impressão (motivo) values
+  Insert into impressao (motivo) values
   ('Chapa arranhada'), ('Não chega na cor'),
   ('Outro fator');
   
