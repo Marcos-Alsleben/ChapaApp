@@ -99,7 +99,7 @@ public class OutrosDAO {
             List<Outros> lista = new ArrayList<>();
             
             //Cria comando sql
-            String sql = "select * from outros";
+            String sql = "select * from outros order by motivo asc";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);

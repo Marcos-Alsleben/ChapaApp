@@ -142,4 +142,45 @@ public class HorasCompGrafDAO {
         }
     }
     
+    //Metodo Buscar Pega somente o primeiro da lista
+    public List<HorasCompGraf> BuscaOperador(String rp){
+        
+        try {
+            //Cria a Lista
+            List<HorasCompGraf> lista = new ArrayList<>();
+            
+            //Cria comando sql
+            String sql = "SELECT * FROM horascompgraf where "
+                    + "ordemprod =? order by criado asc limit 1;";
+            
+            //Conecta ao banco de dados e organiza o comando sql
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, rp);                      
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()){
+                                       
+                HorasCompGraf obj = new HorasCompGraf();
+                obj.setCod_hcg(rs.getInt("cod_hcg"));
+                obj.setCadoperador(rs.getInt("cadoperador"));
+                obj.setNomeoperador(rs.getString("nomeoperador"));
+                obj.setOrdemprod(rs.getString("ordemprod"));
+                obj.setObs(rs.getString("obs"));
+                obj.setInicio(rs.getString("inicio"));
+                obj.setTermino(rs.getString("termino"));
+                obj.setCriado(rs.getString("criado"));
+                obj.setModificado(rs.getString("modificado"));
+                                
+                //Executa
+                lista.add(obj);
+                
+            }
+            con.close();
+            return lista;
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "Erro:" + erro);
+            return null;
+        }
+    }
+    
 }

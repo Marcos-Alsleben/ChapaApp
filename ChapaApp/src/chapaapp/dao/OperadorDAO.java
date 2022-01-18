@@ -100,7 +100,7 @@ public class OperadorDAO {
             List<Operador> lista = new ArrayList<>();
             
             //Cria comando sql
-            String sql = "select * from operador";
+            String sql = "select * from operador  order by nome asc";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);

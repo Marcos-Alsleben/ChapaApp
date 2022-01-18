@@ -30,18 +30,23 @@ public class CadastroChapaDAO {
     public void cadastrar(CadastroChapa obj){
         try {
             //Cria comando sql
-            String sql = "insert into cadastrochapa (ordemprod, situacao, turno,"
-                    + "cod_hcg, obs, criado, modificado) values (?,?,?,?,?,?,?)";
+            String sql = "insert into cadastrochapa (ordemprod, situacao, quantidade, turno,"
+                    + "cod_hcg, maquina, apontamento, descricao, obs, criado, modificado) "
+                    + "values (?,?,?,?,?,?,?,?,?,?,?)";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, obj.getOrdemprod());
             stmt.setString(2, obj.getSituacao());
-            stmt.setString(3, obj.getTurno());
-            stmt.setInt(4, obj.getCod_hcg());
-            stmt.setString(5, obj.getObs());
-            stmt.setString(6, obj.getCriado());
-            stmt.setString(7, obj.getModificado());
+            stmt.setInt(3, obj.getQuantidade());
+            stmt.setString(4, obj.getTurno());
+            stmt.setInt(5, obj.getCod_hcg());
+            stmt.setString(6, obj.getMaquina());
+            stmt.setString(7, obj.getApontamento());
+            stmt.setString(8, obj.getDescricao());
+            stmt.setString(9, obj.getObs());
+            stmt.setString(10, obj.getCriado());
+            stmt.setString(11, obj.getModificado());
                      
             //Executa o comando sql
             stmt.execute();
@@ -125,8 +130,12 @@ public class CadastroChapaDAO {
                 obj.setCod_cadch(rs.getInt("cod_cadch"));
                 obj.setOrdemprod(rs.getString("ordemprod"));
                 obj.setSituacao(rs.getString("situacao"));
+                obj.setQuantidade(rs.getInt("quantidade"));
                 obj.setTurno(rs.getString("turno"));
-                obj.setCod_hcg(rs.getInt("cod_lch"));
+                obj.setCod_hcg(rs.getInt("cod_hcg"));
+                obj.setMaquina(rs.getString("maquina"));
+                obj.setApontamento(rs.getString("apontamento"));
+                obj.setDescricao(rs.getString("descricao"));
                 obj.setObs(rs.getString("obs"));
                 obj.setCriado(rs.getString("criado"));
                 obj.setModificado(rs.getString("modificado"));

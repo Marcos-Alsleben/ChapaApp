@@ -16,6 +16,7 @@ public class HorasCompGraf {
     private int cadoperador;
     private String nomeoperador;
     private String ordemprod;
+    private String obs;
     private String inicio;
     private String termino;
     private String criado;
@@ -52,6 +53,14 @@ public class HorasCompGraf {
 
     public void setOrdemprod(String ordemprod) {
         this.ordemprod = ordemprod;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public String getInicio() {

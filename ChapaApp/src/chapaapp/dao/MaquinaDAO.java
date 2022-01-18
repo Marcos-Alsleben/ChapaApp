@@ -99,7 +99,7 @@ public class MaquinaDAO {
             List<Maquina> lista = new ArrayList<>();
             
             //Cria comando sql
-            String sql = "select * from maquina";
+            String sql = "select * from maquina order by nome asc";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);

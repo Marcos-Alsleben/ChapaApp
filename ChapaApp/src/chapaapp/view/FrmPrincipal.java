@@ -5,14 +5,18 @@
  */
 package chapaapp.view;
 
+import chapaapp.dao.CadastroChapaDAO;
 import chapaapp.dao.CopiaChapaDAO;
+import chapaapp.dao.HorasCompGrafDAO;
 import chapaapp.dao.ImpressaoDAO;
 import chapaapp.dao.MaquinaDAO;
 import chapaapp.dao.OutrosDAO;
 import chapaapp.dao.PreImpressaoDAO;
 import chapaapp.dao.ProgramacaoDAO;
 import chapaapp.dao.VendasClienteDAO;
+import chapaapp.model.CadastroChapa;
 import chapaapp.model.CopiaChapa;
+import chapaapp.model.HorasCompGraf;
 import chapaapp.model.Impressao;
 import chapaapp.model.Maquina;
 import chapaapp.model.Outros;
@@ -24,6 +28,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,19 +42,28 @@ import javax.swing.table.JTableHeader;
  * @author usuario
  */
 public class FrmPrincipal extends javax.swing.JFrame {
-    
+
+    // Metodo Pegar Data
+    public String Dh() {
+        Date data = new Date();
+        SimpleDateFormat formatar = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dataFormatada = formatar.format(data);
+
+        return dataFormatada;
+    }
+
     //Metodo mostrar cardLayout 1
     public void MostraCard1(String card) {
         CardLayout cl = (CardLayout) jPanelCard1.getLayout();
         cl.show(jPanelCard1, card);
     }
-    
+
     //Metodo mostrar cardLayout 2
     public void MostraCard2(String card) {
         CardLayout cl = (CardLayout) jPanelCard2.getLayout();
         cl.show(jPanelCard2, card);
     }
-    
+
     //Personalizar tabelas
     public void PersonalizarTabelas() {
         JTableHeader Tb1 = tb_vendascliente.getTableHeader();
@@ -57,50 +72,57 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ((DefaultTableCellRenderer) Tb1.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollvendascliente.getViewport().setBackground(Color.DARK_GRAY);
         tb_vendascliente.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb2 = tb_programacao.getTableHeader();
         Tb2.setBackground(Color.black);
         Tb2.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb2.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollprogramacao.getViewport().setBackground(Color.DARK_GRAY);
         tb_programacao.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb3 = tb_preImpressao.getTableHeader();
         Tb3.setBackground(Color.black);
         Tb3.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb3.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollpreimpressao.getViewport().setBackground(Color.DARK_GRAY);
         tb_preImpressao.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb4 = tb_copiaChapa.getTableHeader();
         Tb4.setBackground(Color.black);
         Tb4.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb4.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollcopiachapa.getViewport().setBackground(Color.DARK_GRAY);
         tb_copiaChapa.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb5 = tb_impressao.getTableHeader();
         Tb5.setBackground(Color.black);
         Tb5.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb5.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollimpressao.getViewport().setBackground(Color.DARK_GRAY);
         tb_impressao.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb6 = tb_outros.getTableHeader();
         Tb6.setBackground(Color.black);
         Tb6.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb6.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrolloutros.getViewport().setBackground(Color.DARK_GRAY);
         tb_outros.setBackground(Color.DARK_GRAY);
-        
+
         JTableHeader Tb7 = tb_maquina.getTableHeader();
         Tb7.setBackground(Color.black);
         Tb7.setFont(new Font("Dialog", 1, 12));
         ((DefaultTableCellRenderer) Tb7.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollmaquina.getViewport().setBackground(Color.DARK_GRAY);
         tb_maquina.setBackground(Color.DARK_GRAY);
+
+        JTableHeader Tb8 = tb_grav.getTableHeader();
+        Tb8.setBackground(Color.black);
+        Tb8.setFont(new Font("Dialog", 1, 12));
+        ((DefaultTableCellRenderer) Tb8.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        jScrollgrav.getViewport().setBackground(Color.DARK_GRAY);
+        tb_grav.setBackground(Color.DARK_GRAY);
     }
-    
+
     //Metodo listar
     public void listarVendasCliente() {
         VendasClienteDAO dao = new VendasClienteDAO();
@@ -114,7 +136,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarPreImpressao() {
         PreImpressaoDAO dao = new PreImpressaoDAO();
@@ -128,7 +150,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarProgramacao() {
         ProgramacaoDAO dao = new ProgramacaoDAO();
@@ -142,7 +164,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarCopiaChapa() {
         CopiaChapaDAO dao = new CopiaChapaDAO();
@@ -156,7 +178,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarImpressao() {
         ImpressaoDAO dao = new ImpressaoDAO();
@@ -170,7 +192,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarOutros() {
         OutrosDAO dao = new OutrosDAO();
@@ -184,7 +206,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     //Metodo listar
     public void listarMaquina() {
         MaquinaDAO dao = new MaquinaDAO();
@@ -198,7 +220,44 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
+    //Metodo listar
+    public void listarGravacao() {
+        CadastroChapaDAO dao = new CadastroChapaDAO();
+        List<CadastroChapa> lista = dao.listar();
+        DefaultTableModel dados = (DefaultTableModel) tb_grav.getModel();
+        dados.setNumRows(0);
+        for (CadastroChapa c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_cadch(),
+                c.getOrdemprod(),
+                c.getSituacao(),
+                c.getQuantidade(),
+                c.getTurno(),
+                c.getCod_hcg(),
+                c.getMaquina(),
+                c.getApontamento(),
+                c.getDescricao(),
+                c.getCriado(),
+                c.getModificado(),});
+
+        }
+    }
+
+    //Metodo Atualiza cbMaquina
+    public void AtualizarcbMaquinaGrav() {
+        MaquinaDAO dao = new MaquinaDAO();
+        List<Maquina> lista = dao.listar();
+
+        cb_maquinaGrav.removeAllItems();
+        cb_maquinaGrav.addItem("*");
+
+        for (Maquina c : lista) {
+            cb_maquinaGrav.addItem(c.getNome());
+
+        }
+    }
+
     //limpar campos
     public void LimparVendasCliente() {
         txt_codVend_cad.setText("");
@@ -210,7 +269,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpVend.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparProgramacao() {
         txt_codProg_cad.setText("");
@@ -222,7 +281,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpProg.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparPreImpressao() {
         txt_codPre_cad.setText("");
@@ -234,7 +293,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpPre.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparCopiaChapa() {
         txt_codCopChapa_cad.setText("");
@@ -246,7 +305,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpCopChapa.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparImpressao() {
         txt_codImp_cad.setText("");
@@ -258,7 +317,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpImp.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparOutros() {
         txt_codOut_cad.setText("");
@@ -270,7 +329,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpOut.setEnabled(false);
 
     }
-    
+
     //limpar campos
     public void LimparMaquina() {
         txt_codMaq_cad.setText("");
@@ -282,16 +341,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_limpMaq.setEnabled(false);
 
     }
-    
-    
+
+    //limpar campos
+    public void LimparGravacao() {
+        txt_rpGrav.setText("");
+        txt_montGrav.setText("");
+        txt_qtdGrav.setText("");
+        cb_maquinaGrav.setSelectedItem("*");
+        txt_operadorGrav.setText("");
+
+        btn_novoGrav.setEnabled(true);
+        btn_alteraGrav.setEnabled(false);
+        btn_excluiGrav.setEnabled(false);
+        btn_limpaGrav.setEnabled(true);
+
+    }
 
     /**
      * Creates new form FrmPrincipal
      */
+    String datacriacao = null;
+
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         PersonalizarTabelas();
+        AtualizarcbMaquinaGrav();
+
     }
 
     /**
@@ -313,8 +389,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        cb_turno = new javax.swing.JComboBox();
+        jLabel18 = new javax.swing.JLabel();
         jPanelCard1 = new javax.swing.JPanel();
         jPanelGrav = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollgrav = new javax.swing.JScrollPane();
+        tb_grav = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        txt_codGrav = new javax.swing.JTextField();
+        txt_rpGrav = new javax.swing.JTextField();
+        btn_buscaRpGrav = new javax.swing.JButton();
+        cb_maquinaGrav = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        txt_qtdGrav = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txt_montGrav = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        txt_operadorGrav = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        btn_preencheData = new javax.swing.JButton();
+        btn_novoGrav = new javax.swing.JButton();
+        btn_alteraGrav = new javax.swing.JButton();
+        btn_excluiGrav = new javax.swing.JButton();
+        btn_limpaGrav = new javax.swing.JButton();
         jPanelRegrav = new javax.swing.JPanel();
         jPanelLote = new javax.swing.JPanel();
         jPanelAjustes = new javax.swing.JPanel();
@@ -483,12 +583,25 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("AJUSTES");
 
+        cb_turno.setBackground(new java.awt.Color(65, 65, 65));
+        cb_turno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_turno.setForeground(new java.awt.Color(255, 255, 255));
+        cb_turno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*", "1", "2" }));
+
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel18.setText("TURNO");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel18)
+                    .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
@@ -516,7 +629,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(jLabel18)
+                                .addGap(0, 0, 0)
+                                .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -535,15 +654,343 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanelGrav.setBackground(new java.awt.Color(65, 65, 65));
 
+        jPanel5.setBackground(new java.awt.Color(65, 65, 65));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel5.setForeground(new java.awt.Color(255, 255, 255));
+
+        tb_grav.setBackground(new java.awt.Color(63, 63, 63));
+        tb_grav.setForeground(new java.awt.Color(255, 255, 255));
+        tb_grav.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "cod_cadch", "RP", "Situação", "Qtd", "T", "Operador", "Maq", "Apontamento", "Descrição", "Observação", "Criado em", "Modificado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tb_grav.getTableHeader().setReorderingAllowed(false);
+        tb_grav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_gravMouseClicked(evt);
+            }
+        });
+        jScrollgrav.setViewportView(tb_grav);
+        if (tb_grav.getColumnModel().getColumnCount() > 0) {
+            tb_grav.getColumnModel().getColumn(0).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(0).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(1).setMinWidth(150);
+            tb_grav.getColumnModel().getColumn(1).setPreferredWidth(150);
+            tb_grav.getColumnModel().getColumn(1).setMaxWidth(150);
+            tb_grav.getColumnModel().getColumn(2).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(2).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(2).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(3).setMinWidth(50);
+            tb_grav.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tb_grav.getColumnModel().getColumn(3).setMaxWidth(50);
+            tb_grav.getColumnModel().getColumn(4).setMinWidth(30);
+            tb_grav.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tb_grav.getColumnModel().getColumn(4).setMaxWidth(30);
+            tb_grav.getColumnModel().getColumn(5).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(5).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(6).setMinWidth(50);
+            tb_grav.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tb_grav.getColumnModel().getColumn(6).setMaxWidth(50);
+            tb_grav.getColumnModel().getColumn(7).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(7).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(7).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(8).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(8).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(8).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(9).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(9).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(9).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(11).setMinWidth(0);
+            tb_grav.getColumnModel().getColumn(11).setPreferredWidth(0);
+            tb_grav.getColumnModel().getColumn(11).setMaxWidth(0);
+        }
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollgrav, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollgrav, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+
+        jPanel6.setBackground(new java.awt.Color(65, 65, 65));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GRAVAÇÃO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        txt_codGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_codGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codGrav.setBorder(null);
+        txt_codGrav.setEnabled(false);
+        txt_codGrav.setFocusable(false);
+
+        txt_rpGrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_rpGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_rpGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_rpGrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        btn_buscaRpGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar2_16.png"))); // NOI18N
+        btn_buscaRpGrav.setToolTipText("Pesquisar!");
+        btn_buscaRpGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_buscaRpGrav.setBorderPainted(false);
+        btn_buscaRpGrav.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpGrav.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpGrav.setPreferredSize(new java.awt.Dimension(30, 30));
+
+        cb_maquinaGrav.setBackground(new java.awt.Color(65, 65, 65));
+        cb_maquinaGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_maquinaGrav.setForeground(new java.awt.Color(255, 255, 255));
+        cb_maquinaGrav.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*" }));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("RP:");
+
+        txt_qtdGrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_qtdGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_qtdGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_qtdGrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Qtd:");
+        jLabel6.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel6.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel6.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Máq:");
+        jLabel11.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel11.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel11.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        txt_montGrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_montGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_montGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_montGrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_montGrav.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_montGravKeyPressed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText(".");
+
+        jLabel16.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Mt:");
+
+        txt_operadorGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_operadorGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_operadorGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_operadorGrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_operadorGrav.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(0, 0, 0)));
+        txt_operadorGrav.setEnabled(false);
+        txt_operadorGrav.setFocusable(false);
+
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Operador:");
+        jLabel17.setEnabled(false);
+        jLabel17.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel17.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel17.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        btn_preencheData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Atualiza_16.png"))); // NOI18N
+        btn_preencheData.setToolTipText("Preencher com data atual");
+        btn_preencheData.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_preencheData.setBorderPainted(false);
+        btn_preencheData.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_preencheData.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_preencheData.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_preencheData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_preencheDataActionPerformed(evt);
+            }
+        });
+
+        btn_novoGrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_novoGrav.setForeground(new java.awt.Color(255, 255, 255));
+        btn_novoGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
+        btn_novoGrav.setToolTipText("Adicionar novo!");
+        btn_novoGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_novoGrav.setBorderPainted(false);
+        btn_novoGrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_novoGrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_novoGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_novoGrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_novoGravActionPerformed(evt);
+            }
+        });
+
+        btn_alteraGrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_alteraGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
+        btn_alteraGrav.setToolTipText("Alterar!");
+        btn_alteraGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_alteraGrav.setBorderPainted(false);
+        btn_alteraGrav.setEnabled(false);
+        btn_alteraGrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_alteraGrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_alteraGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        btn_excluiGrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_excluiGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
+        btn_excluiGrav.setToolTipText("Excluir!");
+        btn_excluiGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_excluiGrav.setBorderPainted(false);
+        btn_excluiGrav.setEnabled(false);
+        btn_excluiGrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_excluiGrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_excluiGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        btn_limpaGrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_limpaGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
+        btn_limpaGrav.setToolTipText("Limpa tudo");
+        btn_limpaGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_limpaGrav.setBorderPainted(false);
+        btn_limpaGrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_limpaGrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_limpaGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_limpaGrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpaGravActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_preencheData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addComponent(txt_rpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, 0)
+                    .addComponent(jLabel15)
+                    .addGap(0, 0, 0)
+                    .addComponent(txt_montGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_buscaRpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txt_codGrav)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(87, 87, 87)
+                            .addComponent(jLabel16))
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(btn_novoGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_alteraGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_excluiGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_limpaGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(0, 0, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txt_qtdGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(43, 43, 43)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                        .addComponent(cb_maquinaGrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_rpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_montGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscaRpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(txt_qtdGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(cb_maquinaGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_preencheData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(txt_codGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_excluiGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_limpaGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btn_novoGrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_alteraGrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanelGravLayout = new javax.swing.GroupLayout(jPanelGrav);
         jPanelGrav.setLayout(jPanelGravLayout);
         jPanelGravLayout.setHorizontalGroup(
             jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGroup(jPanelGravLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanelGravLayout.setVerticalGroup(
             jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGroup(jPanelGravLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jPanelCard1.add(jPanelGrav, "grav");
@@ -555,11 +1002,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelRegrav.setLayout(jPanelRegravLayout);
         jPanelRegravLayout.setHorizontalGroup(
             jPanelRegravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 996, Short.MAX_VALUE)
         );
         jPanelRegravLayout.setVerticalGroup(
             jPanelRegravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         jPanelCard1.add(jPanelRegrav, "regrav");
@@ -571,11 +1018,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelLote.setLayout(jPanelLoteLayout);
         jPanelLoteLayout.setHorizontalGroup(
             jPanelLoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 996, Short.MAX_VALUE)
         );
         jPanelLoteLayout.setVerticalGroup(
             jPanelLoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 320, Short.MAX_VALUE)
+            .addGap(0, 330, Short.MAX_VALUE)
         );
 
         jPanelCard1.add(jPanelLote, "lote");
@@ -763,6 +1210,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_vendascliente.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_vendascliente.setGridColor(new java.awt.Color(63, 63, 63));
         tb_vendascliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -877,11 +1325,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txt_motivoVend_cad)
                     .addComponent(txt_codVend_cad)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 432, Short.MAX_VALUE))
         );
         jPanelVendasLayout.setVerticalGroup(
             jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollvendascliente, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollvendascliente, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelVendasLayout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -931,6 +1379,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_programacao.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_programacao.setGridColor(new java.awt.Color(63, 63, 63));
         tb_programacao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1049,7 +1498,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelProgLayout.setVerticalGroup(
             jPanelProgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollprogramacao, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollprogramacao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelProgLayout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1099,6 +1548,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_preImpressao.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_preImpressao.setGridColor(new java.awt.Color(63, 63, 63));
         tb_preImpressao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1217,7 +1667,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelPreImpLayout.setVerticalGroup(
             jPanelPreImpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollpreimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollpreimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelPreImpLayout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1267,6 +1717,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_copiaChapa.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_copiaChapa.setGridColor(new java.awt.Color(63, 63, 63));
         tb_copiaChapa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1385,7 +1836,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelCopiaLayout.setVerticalGroup(
             jPanelCopiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollcopiachapa, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollcopiachapa, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelCopiaLayout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1435,6 +1886,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_impressao.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_impressao.setGridColor(new java.awt.Color(63, 63, 63));
         tb_impressao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1553,7 +2005,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelImpressLayout.setVerticalGroup(
             jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelImpressLayout.createSequentialGroup()
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1603,6 +2055,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_outros.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_outros.setGridColor(new java.awt.Color(63, 63, 63));
         tb_outros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1721,7 +2174,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelOutrosLayout.setVerticalGroup(
             jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrolloutros, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrolloutros, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelOutrosLayout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1771,6 +2224,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tb_maquina.setToolTipText("Duplo clicke para alterar ou excluir cadastro");
         tb_maquina.setGridColor(new java.awt.Color(63, 63, 63));
         tb_maquina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1889,7 +2343,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelMaquinaLayout.setVerticalGroup(
             jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollmaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+            .addComponent(jScrollmaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
             .addGroup(jPanelMaquinaLayout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1922,7 +2376,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAjustesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCard2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelCard2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         jPanelCard1.add(jPanelAjustes, "ajustes");
@@ -1958,57 +2412,57 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+
         MostraCard1("ajustes");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+
         MostraCard1("grav");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         MostraCard1("regrav");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      
+
         MostraCard1("lote");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+
         MostraCard2("vendas");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        
+
         MostraCard2("prog");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-       
+
         MostraCard2("preimp");
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-       
+
         MostraCard2("copia");
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        
+
         MostraCard2("impress");
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-       
+
         MostraCard2("outros");
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-       
+
         MostraCard2("maquina");
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -2097,7 +2551,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_limpVendActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        
+
+        listarGravacao();
         listarVendasCliente();
         listarProgramacao();
         listarPreImpressao();
@@ -2108,7 +2563,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void tb_programacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_programacaoMouseClicked
-        
+
         tb_programacao.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2128,7 +2583,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_programacaoMouseClicked
 
     private void tb_preImpressaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_preImpressaoMouseClicked
-        
+
         tb_preImpressao.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2148,7 +2603,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_preImpressaoMouseClicked
 
     private void tb_copiaChapaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_copiaChapaMouseClicked
-        
+
         tb_copiaChapa.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2168,7 +2623,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_copiaChapaMouseClicked
 
     private void tb_impressaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_impressaoMouseClicked
-        
+
         tb_impressao.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2188,7 +2643,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_impressaoMouseClicked
 
     private void tb_outrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_outrosMouseClicked
-        
+
         tb_outros.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2208,7 +2663,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_outrosMouseClicked
 
     private void tb_maquinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_maquinaMouseClicked
-        
+
         tb_maquina.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -2228,7 +2683,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_maquinaMouseClicked
 
     private void txt_motivoProg_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoProg_cadKeyPressed
-       
+
         if ("".equals(txt_codProg_cad.getText())) {
             btn_addProg.setEnabled(true);
             btn_altProg.setEnabled(false);
@@ -2288,12 +2743,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclProgActionPerformed
 
     private void btn_limpProgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpProgActionPerformed
-        
+
         LimparProgramacao();
     }//GEN-LAST:event_btn_limpProgActionPerformed
 
     private void txt_motivoPre_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoPre_cadKeyPressed
-        
+
         if ("".equals(txt_codPre_cad.getText())) {
             btn_addPre.setEnabled(true);
             btn_altPre.setEnabled(false);
@@ -2331,7 +2786,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_altPreActionPerformed
 
     private void btn_exclPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclPreActionPerformed
-        
+
         String mt = txt_motivoPre_cad.getText();
         int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
@@ -2352,12 +2807,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclPreActionPerformed
 
     private void btn_limpPreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpPreActionPerformed
-        
+
         LimparPreImpressao();
     }//GEN-LAST:event_btn_limpPreActionPerformed
 
     private void txt_motivoCopChapa_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoCopChapa_cadKeyPressed
-       
+
         if ("".equals(txt_codCopChapa_cad.getText())) {
             btn_addCopChapa.setEnabled(true);
             btn_altCopChapa.setEnabled(false);
@@ -2367,7 +2822,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_motivoCopChapa_cadKeyPressed
 
     private void btn_addCopChapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addCopChapaActionPerformed
-        
+
         CopiaChapa obj = new CopiaChapa();
 
         obj.setMotivo(txt_motivoCopChapa_cad.getText());
@@ -2381,7 +2836,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addCopChapaActionPerformed
 
     private void btn_altCopChapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altCopChapaActionPerformed
-       
+
         CopiaChapa obj = new CopiaChapa();
 
         obj.setMotivo(txt_motivoCopChapa_cad.getText());
@@ -2395,7 +2850,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_altCopChapaActionPerformed
 
     private void btn_exclCopChapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclCopChapaActionPerformed
-        
+
         String mt = txt_motivoCopChapa_cad.getText();
         int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
@@ -2416,12 +2871,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclCopChapaActionPerformed
 
     private void btn_limpCopChapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpCopChapaActionPerformed
-        
+
         LimparCopiaChapa();
     }//GEN-LAST:event_btn_limpCopChapaActionPerformed
 
     private void txt_motivoOut_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoOut_cadKeyPressed
-      
+
         if ("".equals(txt_codOut_cad.getText())) {
             btn_addOut.setEnabled(true);
             btn_altOut.setEnabled(false);
@@ -2431,7 +2886,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_motivoOut_cadKeyPressed
 
     private void btn_addOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addOutActionPerformed
-        
+
         Outros obj = new Outros();
 
         obj.setMotivo(txt_motivoOut_cad.getText());
@@ -2445,7 +2900,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addOutActionPerformed
 
     private void btn_altOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altOutActionPerformed
-        
+
         Outros obj = new Outros();
 
         obj.setMotivo(txt_motivoOut_cad.getText());
@@ -2459,7 +2914,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_altOutActionPerformed
 
     private void btn_exclOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclOutActionPerformed
-        
+
         String mt = txt_motivoOut_cad.getText();
         int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
@@ -2480,12 +2935,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclOutActionPerformed
 
     private void btn_limpOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpOutActionPerformed
-        
+
         LimparOutros();
     }//GEN-LAST:event_btn_limpOutActionPerformed
 
     private void txt_nomeMaq_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nomeMaq_cadKeyPressed
-        
+
         if ("".equals(txt_codMaq_cad.getText())) {
             btn_addMaq.setEnabled(true);
             btn_altMaq.setEnabled(false);
@@ -2495,7 +2950,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_nomeMaq_cadKeyPressed
 
     private void btn_addMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addMaqActionPerformed
-        
+
         Maquina obj = new Maquina();
 
         obj.setNome(txt_nomeMaq_cad.getText());
@@ -2509,7 +2964,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addMaqActionPerformed
 
     private void btn_altMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altMaqActionPerformed
-        
+
         Maquina obj = new Maquina();
 
         obj.setNome(txt_nomeMaq_cad.getText());
@@ -2523,7 +2978,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_altMaqActionPerformed
 
     private void btn_exclMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclMaqActionPerformed
-        
+
         String mt = txt_nomeMaq_cad.getText();
         int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
@@ -2544,12 +2999,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclMaqActionPerformed
 
     private void btn_limpMaqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpMaqActionPerformed
-        
+
         LimparMaquina();
     }//GEN-LAST:event_btn_limpMaqActionPerformed
 
     private void txt_motivoImp_cadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_motivoImp_cadKeyPressed
-        
+
         if ("".equals(txt_codImp_cad.getText())) {
             btn_addImp.setEnabled(true);
             btn_altImp.setEnabled(false);
@@ -2559,7 +3014,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_motivoImp_cadKeyPressed
 
     private void btn_addImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addImpActionPerformed
-        
+
         Impressao obj = new Impressao();
 
         obj.setMotivo(txt_motivoImp_cad.getText());
@@ -2573,7 +3028,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addImpActionPerformed
 
     private void btn_altImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altImpActionPerformed
-        
+
         Impressao obj = new Impressao();
 
         obj.setMotivo(txt_motivoImp_cad.getText());
@@ -2587,7 +3042,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_altImpActionPerformed
 
     private void btn_exclImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exclImpActionPerformed
-        
+
         String mt = txt_motivoImp_cad.getText();
         int resposta = JOptionPane.showConfirmDialog(null, "Excluir " + mt + "?", "", JOptionPane.YES_NO_OPTION);
 
@@ -2608,9 +3063,124 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exclImpActionPerformed
 
     private void btn_limpImpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpImpActionPerformed
-        
+
         LimparImpressao();
     }//GEN-LAST:event_btn_limpImpActionPerformed
+
+    private void txt_montGravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_montGravKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_montGravKeyPressed
+
+    private void btn_novoGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoGravActionPerformed
+
+        if ("".equals(txt_rpGrav.getText())) {
+            JOptionPane.showMessageDialog(null, "RP Inválida!", "", 2);
+        } else {
+            if ("".equals(txt_montGrav.getText())) {
+                JOptionPane.showMessageDialog(null, "Montagem Iválida!", "", 2);
+            } else {
+                if ("".equals(txt_qtdGrav.getText())) {
+                    JOptionPane.showMessageDialog(null, "Quantidade Iválida!", "", 2);
+                } else {
+                    if ("*".equals(cb_maquinaGrav.getSelectedItem().toString())) {
+                        JOptionPane.showMessageDialog(null, "Maquina Iválida!", "", 2);
+                    } else {
+                        if ("".equals(txt_operadorGrav.getText())) {
+                            JOptionPane.showMessageDialog(null, "Operador Iválido!", "", 2);
+                        } else {
+                            if ("*".equals(cb_turno.getSelectedItem().toString())) {
+                                JOptionPane.showMessageDialog(null, "Turno Iválido!", "", 2);
+                            } else {
+
+                                int codhcg = 0;
+
+                                HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                                List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpGrav.getText());
+
+                                for (HorasCompGraf c : lista) {
+                                    codhcg = c.getCod_hcg();
+
+                                }
+
+                                CadastroChapa obj = new CadastroChapa();
+
+                                obj.setOrdemprod(txt_rpGrav.getText() + "." + txt_montGrav.getText());
+                                obj.setSituacao("Gravado");
+                                obj.setQuantidade(Integer.parseInt(txt_qtdGrav.getText()));
+                                obj.setTurno(cb_turno.getSelectedItem().toString());
+                                obj.setMaquina(cb_maquinaGrav.getSelectedItem().toString());
+                                obj.setCod_hcg(codhcg);
+                                obj.setCriado(Dh());
+                                obj.setModificado(Dh());
+
+                                CadastroChapaDAO dao2 = new CadastroChapaDAO();
+                                dao2.cadastrar(obj);
+
+                                LimparGravacao();
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }//GEN-LAST:event_btn_novoGravActionPerformed
+
+    private void btn_preencheDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_preencheDataActionPerformed
+
+        txt_operadorGrav.setText("");
+
+        HorasCompGrafDAO dao = new HorasCompGrafDAO();
+        List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpGrav.getText());
+
+        for (HorasCompGraf c : lista) {
+            txt_operadorGrav.setText(c.getNomeoperador().toString());
+
+        }
+    }//GEN-LAST:event_btn_preencheDataActionPerformed
+
+    private void btn_limpaGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpaGravActionPerformed
+
+        LimparGravacao();
+    }//GEN-LAST:event_btn_limpaGravActionPerformed
+
+    private void tb_gravMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_gravMouseClicked
+
+        tb_grav.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    datacriacao = tb_grav.getValueAt(tb_grav.getSelectedRow(), 7).toString();
+                    String rp[] = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString().split(".");
+
+                    String c0 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 0).toString();
+                    String c1 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString();
+                    String c2 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 2).toString();
+                    String c3 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 3).toString();
+                    String c4 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 4).toString();
+                    String c5 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 5).toString();
+                    String c6 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 6).toString();
+                    String c7 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 7).toString();
+                    String c8 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 8).toString();
+                    String c9 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 9).toString();
+                    String c10 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 10).toString();
+                    String c11 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 11).toString();
+
+                    txt_codGrav.setText(c0);
+                    txt_rpGrav.setText(rp[0]);
+                    txt_montGrav.setText(rp[1]);
+                    txt_qtdGrav.setText(c3);
+                    cb_maquinaGrav.setSelectedItem(c6);
+                    txt_operadorGrav.setText("");
+
+                    btn_novoGrav.setEnabled(false);
+                    btn_excluiGrav.setEnabled(true);
+                    btn_alteraGrav.setEnabled(true);
+                    btn_limpaGrav.setEnabled(true);
+                }
+            }
+        });
+    }//GEN-LAST:event_tb_gravMouseClicked
 
     /**
      * @param args the command line arguments
@@ -2629,13 +3199,17 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -2662,6 +3236,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_altPre;
     private javax.swing.JButton btn_altProg;
     private javax.swing.JButton btn_altVend;
+    private javax.swing.JButton btn_alteraGrav;
+    private javax.swing.JButton btn_buscaRpGrav;
     private javax.swing.JButton btn_exclCopChapa;
     private javax.swing.JButton btn_exclImp;
     private javax.swing.JButton btn_exclMaq;
@@ -2669,6 +3245,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_exclPre;
     private javax.swing.JButton btn_exclProg;
     private javax.swing.JButton btn_exclVend;
+    private javax.swing.JButton btn_excluiGrav;
     private javax.swing.JButton btn_limpCopChapa;
     private javax.swing.JButton btn_limpImp;
     private javax.swing.JButton btn_limpMaq;
@@ -2676,6 +3253,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btn_limpPre;
     private javax.swing.JButton btn_limpProg;
     private javax.swing.JButton btn_limpVend;
+    private javax.swing.JButton btn_limpaGrav;
+    private javax.swing.JButton btn_novoGrav;
+    private javax.swing.JButton btn_preencheData;
+    public javax.swing.JComboBox cb_maquinaGrav;
+    public javax.swing.JComboBox cb_turno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -2689,18 +3271,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelAjustes;
     private javax.swing.JPanel jPanelCard1;
     private javax.swing.JPanel jPanelCard2;
@@ -2715,6 +3306,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelRegrav;
     private javax.swing.JPanel jPanelVendas;
     private javax.swing.JScrollPane jScrollcopiachapa;
+    private javax.swing.JScrollPane jScrollgrav;
     private javax.swing.JScrollPane jScrollimpressao;
     private javax.swing.JScrollPane jScrollmaquina;
     private javax.swing.JScrollPane jScrolloutros;
@@ -2722,6 +3314,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollprogramacao;
     private javax.swing.JScrollPane jScrollvendascliente;
     private javax.swing.JTable tb_copiaChapa;
+    private javax.swing.JTable tb_grav;
     private javax.swing.JTable tb_impressao;
     private javax.swing.JTable tb_maquina;
     private javax.swing.JTable tb_outros;
@@ -2729,12 +3322,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tb_programacao;
     private javax.swing.JTable tb_vendascliente;
     private javax.swing.JTextField txt_codCopChapa_cad;
+    public javax.swing.JTextField txt_codGrav;
     private javax.swing.JTextField txt_codImp_cad;
     private javax.swing.JTextField txt_codMaq_cad;
     private javax.swing.JTextField txt_codOut_cad;
     private javax.swing.JTextField txt_codPre_cad;
     private javax.swing.JTextField txt_codProg_cad;
     private javax.swing.JTextField txt_codVend_cad;
+    public javax.swing.JTextField txt_montGrav;
     private javax.swing.JTextField txt_motivoCopChapa_cad;
     private javax.swing.JTextField txt_motivoImp_cad;
     private javax.swing.JTextField txt_motivoOut_cad;
@@ -2742,5 +3337,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField txt_motivoProg_cad;
     private javax.swing.JTextField txt_motivoVend_cad;
     private javax.swing.JTextField txt_nomeMaq_cad;
+    public javax.swing.JTextField txt_operadorGrav;
+    public javax.swing.JTextField txt_qtdGrav;
+    public javax.swing.JTextField txt_rpGrav;
     // End of variables declaration//GEN-END:variables
 }

@@ -99,7 +99,7 @@ public class CopiaChapaDAO {
             List<CopiaChapa> lista = new ArrayList<>();
             
             //Cria comando sql
-            String sql = "select * from copiachapa";
+            String sql = "select * from copiachapa order by motivo asc";
             
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);

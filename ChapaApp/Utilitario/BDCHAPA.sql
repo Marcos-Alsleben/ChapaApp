@@ -65,6 +65,7 @@ CREATE TABLE outros (
   
   /***** TABELA *****/
 CREATE TABLE operador (
+  cod_oper int auto_increment primary key,
   cadastro int not null UNIQUE,
   nome varchar (30)
   );
@@ -88,11 +89,22 @@ CREATE TABLE horascompgraf (
   cadoperador int,
   nomeoperador varchar (15),
   ordemprod varchar (10),
+  obs varchar (30),
   inicio timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   termino timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   criado timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   modificado timestamp NULL DEFAULT CURRENT_TIMESTAMP
   );
+  
+  /***** TABELA *****/
+CREATE TABLE obscompgraf (
+  cod_obs int auto_increment primary key,
+  tipo varchar (30)
+  );
+  Insert into obscompgraf (tipo) values
+  ('Prova'), ('Arte Nova'),
+  ('Alteração de Arte'), ('Conforme Modelo'),
+  ('Retrabalho');
   
   /***** TABELA *****/
 CREATE TABLE lotechapa (
@@ -107,8 +119,12 @@ CREATE TABLE cadastrochapa (
   cod_cadch int auto_increment primary key,
   ordemprod varchar (10),
   situacao varchar (15),
-  turno varchar (6),
+  quantidade int,
+  turno int,
   cod_hcg int,
+  maquina varchar (10),
+  apontamento varchar (30),
+  descricao varchar (50),
   obs varchar (200),
   criado timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   modificado timestamp NULL DEFAULT CURRENT_TIMESTAMP

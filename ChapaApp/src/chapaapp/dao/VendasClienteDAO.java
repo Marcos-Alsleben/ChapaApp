@@ -99,7 +99,7 @@ public class VendasClienteDAO {
             List<VendasCliente> lista = new ArrayList<>();
 
             //Cria comando sql
-            String sql = "select * from vendascliente";
+            String sql = "select * from vendascliente order by motivo asc";
 
             //Conecta ao banco de dados e organiza o comando sql
             PreparedStatement stmt = con.prepareStatement(sql);
