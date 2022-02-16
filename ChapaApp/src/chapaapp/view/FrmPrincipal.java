@@ -26,6 +26,7 @@ import chapaapp.model.VendasCliente;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -223,8 +224,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     //Metodo listar
     public void listarGravacao() {
+        String sit = "Gravado";
         CadastroChapaDAO dao = new CadastroChapaDAO();
-        List<CadastroChapa> lista = dao.listar();
+        List<CadastroChapa> lista = dao.listar(sit);
         DefaultTableModel dados = (DefaultTableModel) tb_grav.getModel();
         dados.setNumRows(0);
         for (CadastroChapa c : lista) {
@@ -238,6 +240,33 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 c.getMaquina(),
                 c.getApontamento(),
                 c.getDescricao(),
+                c.getObs(),
+                c.getCriado(),
+                c.getModificado(),});
+
+        }
+    }
+
+//Metodo listar
+    public void PesquisarGravacao() {
+        String rp = txt_rpGrav.getText() + "%";
+        String situacao = "Gravado";
+        CadastroChapaDAO dao = new CadastroChapaDAO();
+        List<CadastroChapa> lista = dao.pesquisar(rp, situacao);
+        DefaultTableModel dados = (DefaultTableModel) tb_grav.getModel();
+        dados.setNumRows(0);
+        for (CadastroChapa c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_cadch(),
+                c.getOrdemprod(),
+                c.getSituacao(),
+                c.getQuantidade(),
+                c.getTurno(),
+                c.getCod_hcg(),
+                c.getMaquina(),
+                c.getApontamento(),
+                c.getDescricao(),
+                c.getObs(),
                 c.getCriado(),
                 c.getModificado(),});
 
@@ -349,6 +378,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txt_qtdGrav.setText("");
         cb_maquinaGrav.setSelectedItem("*");
         txt_operadorGrav.setText("");
+        txt_codCadchGrav.setText("");
+        txt_codHcgGrav.setText("");
+        txt_turnoGrav.setText("");
 
         btn_novoGrav.setEnabled(true);
         btn_alteraGrav.setEnabled(false);
@@ -397,7 +429,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jScrollgrav = new javax.swing.JScrollPane();
         tb_grav = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        txt_codGrav = new javax.swing.JTextField();
+        txt_codCadchGrav = new javax.swing.JTextField();
         txt_rpGrav = new javax.swing.JTextField();
         btn_buscaRpGrav = new javax.swing.JButton();
         cb_maquinaGrav = new javax.swing.JComboBox();
@@ -415,6 +447,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_alteraGrav = new javax.swing.JButton();
         btn_excluiGrav = new javax.swing.JButton();
         btn_limpaGrav = new javax.swing.JButton();
+        txt_codHcgGrav = new javax.swing.JTextField();
+        txt_turnoGrav = new javax.swing.JTextField();
         jPanelRegrav = new javax.swing.JPanel();
         jPanelLote = new javax.swing.JPanel();
         jPanelAjustes = new javax.swing.JPanel();
@@ -662,20 +696,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tb_grav.setForeground(new java.awt.Color(255, 255, 255));
         tb_grav.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "cod_cadch", "RP", "Situação", "Qtd", "T", "Operador", "Maq", "Apontamento", "Descrição", "Observação", "Criado em", "Modificado"
+                "cod_cadch", "RP", "Situação", "Qtd", "T", "cod_hcg", "Maq", "Apontamento", "Descrição", "Observação", "Criado em", "Modificado", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -697,9 +731,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             tb_grav.getColumnModel().getColumn(0).setMinWidth(0);
             tb_grav.getColumnModel().getColumn(0).setPreferredWidth(0);
             tb_grav.getColumnModel().getColumn(0).setMaxWidth(0);
-            tb_grav.getColumnModel().getColumn(1).setMinWidth(150);
-            tb_grav.getColumnModel().getColumn(1).setPreferredWidth(150);
-            tb_grav.getColumnModel().getColumn(1).setMaxWidth(150);
+            tb_grav.getColumnModel().getColumn(1).setMinWidth(80);
+            tb_grav.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tb_grav.getColumnModel().getColumn(1).setMaxWidth(80);
             tb_grav.getColumnModel().getColumn(2).setMinWidth(0);
             tb_grav.getColumnModel().getColumn(2).setPreferredWidth(0);
             tb_grav.getColumnModel().getColumn(2).setMaxWidth(0);
@@ -724,6 +758,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             tb_grav.getColumnModel().getColumn(9).setMinWidth(0);
             tb_grav.getColumnModel().getColumn(9).setPreferredWidth(0);
             tb_grav.getColumnModel().getColumn(9).setMaxWidth(0);
+            tb_grav.getColumnModel().getColumn(10).setMinWidth(140);
+            tb_grav.getColumnModel().getColumn(10).setPreferredWidth(140);
+            tb_grav.getColumnModel().getColumn(10).setMaxWidth(140);
             tb_grav.getColumnModel().getColumn(11).setMinWidth(0);
             tb_grav.getColumnModel().getColumn(11).setPreferredWidth(0);
             tb_grav.getColumnModel().getColumn(11).setMaxWidth(0);
@@ -743,17 +780,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel6.setBackground(new java.awt.Color(65, 65, 65));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "GRAVAÇÃO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        txt_codGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
-        txt_codGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        txt_codGrav.setForeground(new java.awt.Color(255, 255, 255));
-        txt_codGrav.setBorder(null);
-        txt_codGrav.setEnabled(false);
-        txt_codGrav.setFocusable(false);
+        txt_codCadchGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codCadchGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_codCadchGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codCadchGrav.setBorder(null);
+        txt_codCadchGrav.setEnabled(false);
+        txt_codCadchGrav.setFocusable(false);
 
         txt_rpGrav.setBackground(new java.awt.Color(63, 63, 63));
         txt_rpGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         txt_rpGrav.setForeground(new java.awt.Color(255, 255, 255));
         txt_rpGrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_rpGrav.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_rpGravKeyPressed(evt);
+            }
+        });
 
         btn_buscaRpGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar2_16.png"))); // NOI18N
         btn_buscaRpGrav.setToolTipText("Pesquisar!");
@@ -762,6 +804,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_buscaRpGrav.setMaximumSize(new java.awt.Dimension(30, 30));
         btn_buscaRpGrav.setMinimumSize(new java.awt.Dimension(30, 30));
         btn_buscaRpGrav.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpGrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscaRpGravActionPerformed(evt);
+            }
+        });
 
         cb_maquinaGrav.setBackground(new java.awt.Color(65, 65, 65));
         cb_maquinaGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -862,6 +909,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_alteraGrav.setMaximumSize(new java.awt.Dimension(40, 40));
         btn_alteraGrav.setMinimumSize(new java.awt.Dimension(40, 40));
         btn_alteraGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_alteraGrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alteraGravActionPerformed(evt);
+            }
+        });
 
         btn_excluiGrav.setBackground(new java.awt.Color(22, 22, 22));
         btn_excluiGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
@@ -872,6 +924,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_excluiGrav.setMaximumSize(new java.awt.Dimension(40, 40));
         btn_excluiGrav.setMinimumSize(new java.awt.Dimension(40, 40));
         btn_excluiGrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_excluiGrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_excluiGravActionPerformed(evt);
+            }
+        });
 
         btn_limpaGrav.setBackground(new java.awt.Color(22, 22, 22));
         btn_limpaGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
@@ -886,6 +943,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 btn_limpaGravActionPerformed(evt);
             }
         });
+
+        txt_codHcgGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codHcgGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_codHcgGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codHcgGrav.setBorder(null);
+        txt_codHcgGrav.setEnabled(false);
+        txt_codHcgGrav.setFocusable(false);
+
+        txt_turnoGrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_turnoGrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_turnoGrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_turnoGrav.setBorder(null);
+        txt_turnoGrav.setEnabled(false);
+        txt_turnoGrav.setFocusable(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -906,22 +977,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txt_montGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_buscaRpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(txt_codGrav)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(87, 87, 87)
-                            .addComponent(jLabel16))
-                        .addGroup(jPanel6Layout.createSequentialGroup()
-                            .addComponent(btn_novoGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_alteraGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_excluiGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_limpaGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(0, 0, Short.MAX_VALUE))
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txt_qtdGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -931,7 +986,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanel6Layout.createSequentialGroup()
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addContainerGap())
-                        .addComponent(cb_maquinaGrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(cb_maquinaGrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(87, 87, 87)
+                            .addComponent(jLabel16))
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(txt_codCadchGrav)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_codHcgGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_turnoGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(btn_novoGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_alteraGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_excluiGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_limpaGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -962,7 +1039,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txt_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_preencheData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(txt_codGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_codCadchGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_codHcgGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_turnoGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_excluiGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3143,6 +3223,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btn_limpaGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpaGravActionPerformed
 
         LimparGravacao();
+        listarGravacao();
     }//GEN-LAST:event_btn_limpaGravActionPerformed
 
     private void tb_gravMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_gravMouseClicked
@@ -3150,28 +3231,37 @@ public class FrmPrincipal extends javax.swing.JFrame {
         tb_grav.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    datacriacao = tb_grav.getValueAt(tb_grav.getSelectedRow(), 7).toString();
-                    String rp[] = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString().split(".");
+                    datacriacao = tb_grav.getValueAt(tb_grav.getSelectedRow(), 10).toString();
+                    String rp[] = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString().replace(".", "_").split("_");
 
                     String c0 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 0).toString();
-                    String c1 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString();
-                    String c2 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 2).toString();
+                    //String c1 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 1).toString();
+                    //String c2 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 2).toString();
                     String c3 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 3).toString();
                     String c4 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 4).toString();
                     String c5 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 5).toString();
                     String c6 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 6).toString();
-                    String c7 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 7).toString();
-                    String c8 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 8).toString();
-                    String c9 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 9).toString();
-                    String c10 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 10).toString();
-                    String c11 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 11).toString();
+                    //String c7 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 7).toString();
+                    //String c8 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 8).toString();
+                    //String c9 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 9).toString();
+                    //String c10 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 10).toString();
+                    //String c11 = tb_grav.getValueAt(tb_grav.getSelectedRow(), 11).toString();
 
-                    txt_codGrav.setText(c0);
+                    txt_codCadchGrav.setText(c0);
                     txt_rpGrav.setText(rp[0]);
                     txt_montGrav.setText(rp[1]);
                     txt_qtdGrav.setText(c3);
+                    txt_codHcgGrav.setText(c5);
+                    txt_turnoGrav.setText(c4);
                     cb_maquinaGrav.setSelectedItem(c6);
-                    txt_operadorGrav.setText("");
+
+                    HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                    List<HorasCompGraf> lista = dao.BuscaOperador(rp[0]);
+
+                    for (HorasCompGraf c : lista) {
+                        txt_operadorGrav.setText(c.getNomeoperador().toString());
+
+                    }
 
                     btn_novoGrav.setEnabled(false);
                     btn_excluiGrav.setEnabled(true);
@@ -3181,6 +3271,99 @@ public class FrmPrincipal extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_tb_gravMouseClicked
+
+    private void btn_alteraGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteraGravActionPerformed
+
+        if ("".equals(txt_rpGrav.getText())) {
+            JOptionPane.showMessageDialog(null, "RP Inválida!", "", 2);
+        } else {
+            if ("".equals(txt_montGrav.getText())) {
+                JOptionPane.showMessageDialog(null, "Montagem Iválida!", "", 2);
+            } else {
+                if ("".equals(txt_qtdGrav.getText())) {
+                    JOptionPane.showMessageDialog(null, "Quantidade Iválida!", "", 2);
+                } else {
+                    if ("*".equals(cb_maquinaGrav.getSelectedItem().toString())) {
+                        JOptionPane.showMessageDialog(null, "Maquina Iválida!", "", 2);
+                    } else {
+                        if ("".equals(txt_operadorGrav.getText())) {
+                            JOptionPane.showMessageDialog(null, "Operador Iválido!", "", 2);
+                        } else {
+                            if ("*".equals(cb_turno.getSelectedItem().toString())) {
+                                JOptionPane.showMessageDialog(null, "Turno Iválido!", "", 2);
+                            } else {
+
+                                int codhcg = 0;
+
+                                HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                                List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpGrav.getText());
+
+                                for (HorasCompGraf c : lista) {
+                                    codhcg = c.getCod_hcg();
+
+                                }
+
+                                CadastroChapa obj = new CadastroChapa();
+
+                                obj.setOrdemprod(txt_rpGrav.getText() + "." + txt_montGrav.getText());
+                                obj.setSituacao("Gravado");
+                                obj.setQuantidade(Integer.parseInt(txt_qtdGrav.getText()));
+                                obj.setTurno(cb_turno.getSelectedItem().toString());
+                                obj.setCod_hcg(codhcg);
+                                obj.setMaquina(cb_maquinaGrav.getSelectedItem().toString());
+                                obj.setApontamento(null);
+                                obj.setDescricao(null);
+                                obj.setObs(null);
+                                obj.setCriado(datacriacao);
+                                obj.setModificado(Dh());
+                                obj.setCod_cadch(Integer.parseInt(txt_codCadchGrav.getText()));
+
+                                CadastroChapaDAO dao2 = new CadastroChapaDAO();
+                                dao2.alterar(obj);
+
+                                LimparGravacao();
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_alteraGravActionPerformed
+
+    private void btn_excluiGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluiGravActionPerformed
+
+        String rp = txt_rpGrav.getText();
+        int resposta = JOptionPane.showConfirmDialog(null, "Excluir o registro da RP " + rp + "?", "", JOptionPane.YES_NO_OPTION);
+
+        if (resposta == 0) {
+            CadastroChapa obj = new CadastroChapa();
+
+            obj.setCod_cadch(Integer.parseInt(txt_codCadchGrav.getText()));
+
+            CadastroChapaDAO dao = new CadastroChapaDAO();
+
+            dao.excluir(obj);
+
+            LimparGravacao();
+        }
+    }//GEN-LAST:event_btn_excluiGravActionPerformed
+
+    private void btn_buscaRpGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscaRpGravActionPerformed
+
+        PesquisarGravacao();
+    }//GEN-LAST:event_btn_buscaRpGravActionPerformed
+
+    private void txt_rpGravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rpGravKeyPressed
+        
+if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            PesquisarGravacao();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_rpGrav.setText("");
+            PesquisarGravacao();
+        }
+    }//GEN-LAST:event_txt_rpGravKeyPressed
 
     /**
      * @param args the command line arguments
@@ -3321,8 +3504,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tb_preImpressao;
     private javax.swing.JTable tb_programacao;
     private javax.swing.JTable tb_vendascliente;
+    public javax.swing.JTextField txt_codCadchGrav;
     private javax.swing.JTextField txt_codCopChapa_cad;
-    public javax.swing.JTextField txt_codGrav;
+    public javax.swing.JTextField txt_codHcgGrav;
     private javax.swing.JTextField txt_codImp_cad;
     private javax.swing.JTextField txt_codMaq_cad;
     private javax.swing.JTextField txt_codOut_cad;
@@ -3340,5 +3524,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
     public javax.swing.JTextField txt_operadorGrav;
     public javax.swing.JTextField txt_qtdGrav;
     public javax.swing.JTextField txt_rpGrav;
+    public javax.swing.JTextField txt_turnoGrav;
     // End of variables declaration//GEN-END:variables
 }
