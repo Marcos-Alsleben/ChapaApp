@@ -122,6 +122,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         ((DefaultTableCellRenderer) Tb8.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
         jScrollgrav.getViewport().setBackground(Color.DARK_GRAY);
         tb_grav.setBackground(Color.DARK_GRAY);
+
+        JTableHeader Tb9 = tb_regrav.getTableHeader();
+        Tb9.setBackground(Color.black);
+        Tb9.setFont(new Font("Dialog", 1, 12));
+        ((DefaultTableCellRenderer) Tb9.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        jScrollRegrav.getViewport().setBackground(Color.DARK_GRAY);
+        tb_regrav.setBackground(Color.DARK_GRAY);
     }
 
     //Metodo listar
@@ -222,7 +229,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
 
-    //Metodo listar
+    //Metodo listar Gravado
     public void listarGravacao() {
         String sit = "Gravado";
         CadastroChapaDAO dao = new CadastroChapaDAO();
@@ -247,7 +254,32 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
 
-//Metodo listar
+//Metodo listar Regravado
+    public void listarRegravacao() {
+        String sit = "Regravado";
+        CadastroChapaDAO dao = new CadastroChapaDAO();
+        List<CadastroChapa> lista = dao.listar(sit);
+        DefaultTableModel dados = (DefaultTableModel) tb_regrav.getModel();
+        dados.setNumRows(0);
+        for (CadastroChapa c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_cadch(),
+                c.getOrdemprod(),
+                c.getSituacao(),
+                c.getQuantidade(),
+                c.getTurno(),
+                c.getCod_hcg(),
+                c.getMaquina(),
+                c.getApontamento(),
+                c.getDescricao(),
+                c.getObs(),
+                c.getCriado(),
+                c.getModificado(),});
+
+        }
+    }
+
+//Metodo Pesquisar Gravação
     public void PesquisarGravacao() {
         String rp = txt_rpGrav.getText() + "%";
         String situacao = "Gravado";
@@ -273,16 +305,46 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }
 
+//Metodo Pesquisar Regravação
+    public void PesquisarRegravacao() {
+        String rp = txt_rpRegrav.getText() + "%";
+        String situacao = "Regravado";
+        CadastroChapaDAO dao = new CadastroChapaDAO();
+        List<CadastroChapa> lista = dao.pesquisar(rp, situacao);
+        DefaultTableModel dados = (DefaultTableModel) tb_regrav.getModel();
+        dados.setNumRows(0);
+        for (CadastroChapa c : lista) {
+            dados.addRow(new Object[]{
+                c.getCod_cadch(),
+                c.getOrdemprod(),
+                c.getSituacao(),
+                c.getQuantidade(),
+                c.getTurno(),
+                c.getCod_hcg(),
+                c.getMaquina(),
+                c.getApontamento(),
+                c.getDescricao(),
+                c.getObs(),
+                c.getCriado(),
+                c.getModificado(),});
+
+        }
+    }
+
     //Metodo Atualiza cbMaquina
-    public void AtualizarcbMaquinaGrav() {
+    public void AtualizarcbMaquina() {
         MaquinaDAO dao = new MaquinaDAO();
         List<Maquina> lista = dao.listar();
 
         cb_maquinaGrav.removeAllItems();
         cb_maquinaGrav.addItem("*");
 
+        cb_maquinaRegrav.removeAllItems();
+        cb_maquinaRegrav.addItem("*");
+
         for (Maquina c : lista) {
             cb_maquinaGrav.addItem(c.getNome());
+            cb_maquinaRegrav.addItem(c.getNome());
 
         }
     }
@@ -389,6 +451,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     }
 
+//limpar campos
+    public void LimparRegravacao() {
+        txt_rpRegrav.setText("");
+        txt_montRegrav.setText("");
+        txt_qtdRegrav.setText("");
+        cb_maquinaRegrav.setSelectedItem("*");
+        cb_apontamentoRegrav.setSelectedItem("*");
+        cb_descricaoRegrav.setSelectedItem("*");
+        txt_obsRegrav.setText("");
+        txt_operadorRegrav.setText("");
+        txt_codCadchRegrav.setText("");
+        txt_codHcgRegrav.setText("");
+        txt_turnoRegrav.setText("");
+
+        btn_novoRegrav.setEnabled(true);
+        btn_alteraRegrav.setEnabled(false);
+        btn_excluiRegrav.setEnabled(false);
+        btn_limpaRegrav.setEnabled(true);
+
+    }
+
     /**
      * Creates new form FrmPrincipal
      */
@@ -398,7 +481,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         PersonalizarTabelas();
-        AtualizarcbMaquinaGrav();
+        AtualizarcbMaquina();
 
     }
 
@@ -421,8 +504,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        cb_turno = new javax.swing.JComboBox();
-        jLabel18 = new javax.swing.JLabel();
         jPanelCard1 = new javax.swing.JPanel();
         jPanelGrav = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -442,7 +523,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txt_operadorGrav = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        btn_preencheData = new javax.swing.JButton();
+        btn_operadorGrav = new javax.swing.JButton();
         btn_novoGrav = new javax.swing.JButton();
         btn_alteraGrav = new javax.swing.JButton();
         btn_excluiGrav = new javax.swing.JButton();
@@ -450,6 +531,36 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txt_codHcgGrav = new javax.swing.JTextField();
         txt_turnoGrav = new javax.swing.JTextField();
         jPanelRegrav = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollRegrav = new javax.swing.JScrollPane();
+        tb_regrav = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        txt_codCadchRegrav = new javax.swing.JTextField();
+        txt_rpRegrav = new javax.swing.JTextField();
+        btn_buscaRpRegrav = new javax.swing.JButton();
+        cb_maquinaRegrav = new javax.swing.JComboBox();
+        jLabel20 = new javax.swing.JLabel();
+        txt_qtdRegrav = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        txt_montRegrav = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txt_operadorRegrav = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        btn_operadorRegrav = new javax.swing.JButton();
+        btn_novoRegrav = new javax.swing.JButton();
+        btn_alteraRegrav = new javax.swing.JButton();
+        btn_excluiRegrav = new javax.swing.JButton();
+        btn_limpaRegrav = new javax.swing.JButton();
+        txt_codHcgRegrav = new javax.swing.JTextField();
+        txt_turnoRegrav = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        cb_apontamentoRegrav = new javax.swing.JComboBox();
+        cb_descricaoRegrav = new javax.swing.JComboBox();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        txt_obsRegrav = new javax.swing.JTextField();
         jPanelLote = new javax.swing.JPanel();
         jPanelAjustes = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -531,6 +642,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btn_altMaq = new javax.swing.JButton();
         btn_exclMaq = new javax.swing.JButton();
         btn_limpMaq = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        cb_turno = new javax.swing.JComboBox();
+        jLabel19 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(63, 63, 63));
@@ -617,37 +732,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("AJUSTES");
 
-        cb_turno.setBackground(new java.awt.Color(65, 65, 65));
-        cb_turno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        cb_turno.setForeground(new java.awt.Color(255, 255, 255));
-        cb_turno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*", "1", "2" }));
-
-        jLabel18.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel18.setText("TURNO");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel18)
-                    .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jButton1))
-                .addGap(65, 65, 65)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jButton2))
-                .addGap(65, 65, 65)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
                     .addComponent(jButton3))
-                .addGap(65, 65, 65)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4)
                     .addComponent(jButton4))
@@ -663,13 +765,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel18)
-                                .addGap(0, 0, 0)
-                                .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -770,7 +866,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollgrav, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+            .addComponent(jScrollgrav, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -872,16 +968,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jLabel17.setMinimumSize(new java.awt.Dimension(17, 15));
         jLabel17.setPreferredSize(new java.awt.Dimension(17, 15));
 
-        btn_preencheData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Atualiza_16.png"))); // NOI18N
-        btn_preencheData.setToolTipText("Preencher com data atual");
-        btn_preencheData.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btn_preencheData.setBorderPainted(false);
-        btn_preencheData.setMaximumSize(new java.awt.Dimension(30, 30));
-        btn_preencheData.setMinimumSize(new java.awt.Dimension(30, 30));
-        btn_preencheData.setPreferredSize(new java.awt.Dimension(30, 30));
-        btn_preencheData.addActionListener(new java.awt.event.ActionListener() {
+        btn_operadorGrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Atualiza_16.png"))); // NOI18N
+        btn_operadorGrav.setToolTipText("Preencher com data atual");
+        btn_operadorGrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_operadorGrav.setBorderPainted(false);
+        btn_operadorGrav.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_operadorGrav.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_operadorGrav.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_operadorGrav.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_preencheDataActionPerformed(evt);
+                btn_operadorGravActionPerformed(evt);
             }
         });
 
@@ -967,7 +1063,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_preencheData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btn_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addComponent(txt_rpGrav, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1037,7 +1133,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txt_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_preencheData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_operadorGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_codCadchGrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1050,7 +1146,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btn_novoGrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_alteraGrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelGravLayout = new javax.swing.GroupLayout(jPanelGrav);
@@ -1058,16 +1154,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelGravLayout.setHorizontalGroup(
             jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGravLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(3, 3, 3)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(4, 4, 4))
         );
         jPanelGravLayout.setVerticalGroup(
             jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelGravLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
                 .addGroup(jPanelGravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -1078,15 +1174,449 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         jPanelRegrav.setBackground(new java.awt.Color(65, 65, 65));
 
+        jPanel7.setBackground(new java.awt.Color(65, 65, 65));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanel7.setForeground(new java.awt.Color(255, 255, 255));
+
+        tb_regrav.setBackground(new java.awt.Color(63, 63, 63));
+        tb_regrav.setForeground(new java.awt.Color(255, 255, 255));
+        tb_regrav.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "cod_cadch", "RP", "Situação", "Qtd", "T", "cod_hcg", "Maq", "Apontamento", "Descrição", "Observação", "Criado em", "Modificado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tb_regrav.getTableHeader().setReorderingAllowed(false);
+        tb_regrav.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_regravMouseClicked(evt);
+            }
+        });
+        jScrollRegrav.setViewportView(tb_regrav);
+        if (tb_regrav.getColumnModel().getColumnCount() > 0) {
+            tb_regrav.getColumnModel().getColumn(0).setMinWidth(0);
+            tb_regrav.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tb_regrav.getColumnModel().getColumn(0).setMaxWidth(0);
+            tb_regrav.getColumnModel().getColumn(1).setMinWidth(80);
+            tb_regrav.getColumnModel().getColumn(1).setPreferredWidth(80);
+            tb_regrav.getColumnModel().getColumn(1).setMaxWidth(80);
+            tb_regrav.getColumnModel().getColumn(2).setMinWidth(0);
+            tb_regrav.getColumnModel().getColumn(2).setPreferredWidth(0);
+            tb_regrav.getColumnModel().getColumn(2).setMaxWidth(0);
+            tb_regrav.getColumnModel().getColumn(3).setMinWidth(50);
+            tb_regrav.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tb_regrav.getColumnModel().getColumn(3).setMaxWidth(50);
+            tb_regrav.getColumnModel().getColumn(4).setMinWidth(30);
+            tb_regrav.getColumnModel().getColumn(4).setPreferredWidth(30);
+            tb_regrav.getColumnModel().getColumn(4).setMaxWidth(30);
+            tb_regrav.getColumnModel().getColumn(5).setMinWidth(0);
+            tb_regrav.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tb_regrav.getColumnModel().getColumn(5).setMaxWidth(0);
+            tb_regrav.getColumnModel().getColumn(6).setMinWidth(50);
+            tb_regrav.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tb_regrav.getColumnModel().getColumn(6).setMaxWidth(50);
+            tb_regrav.getColumnModel().getColumn(7).setMinWidth(130);
+            tb_regrav.getColumnModel().getColumn(7).setPreferredWidth(130);
+            tb_regrav.getColumnModel().getColumn(7).setMaxWidth(130);
+            tb_regrav.getColumnModel().getColumn(8).setMinWidth(130);
+            tb_regrav.getColumnModel().getColumn(8).setPreferredWidth(130);
+            tb_regrav.getColumnModel().getColumn(8).setMaxWidth(130);
+            tb_regrav.getColumnModel().getColumn(10).setMinWidth(140);
+            tb_regrav.getColumnModel().getColumn(10).setPreferredWidth(140);
+            tb_regrav.getColumnModel().getColumn(10).setMaxWidth(140);
+            tb_regrav.getColumnModel().getColumn(11).setMinWidth(0);
+            tb_regrav.getColumnModel().getColumn(11).setPreferredWidth(0);
+            tb_regrav.getColumnModel().getColumn(11).setMaxWidth(0);
+        }
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollRegrav, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 837, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+
+        jPanel8.setBackground(new java.awt.Color(65, 65, 65));
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "REGRAVAÇÃO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP, new java.awt.Font("Segoe UI", 1, 14), new java.awt.Color(255, 255, 255))); // NOI18N
+
+        txt_codCadchRegrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codCadchRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_codCadchRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codCadchRegrav.setBorder(null);
+        txt_codCadchRegrav.setEnabled(false);
+        txt_codCadchRegrav.setFocusable(false);
+
+        txt_rpRegrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_rpRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_rpRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_rpRegrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_rpRegrav.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_rpRegravKeyPressed(evt);
+            }
+        });
+
+        btn_buscaRpRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar2_16.png"))); // NOI18N
+        btn_buscaRpRegrav.setToolTipText("Pesquisar!");
+        btn_buscaRpRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_buscaRpRegrav.setBorderPainted(false);
+        btn_buscaRpRegrav.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpRegrav.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpRegrav.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_buscaRpRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscaRpRegravActionPerformed(evt);
+            }
+        });
+
+        cb_maquinaRegrav.setBackground(new java.awt.Color(65, 65, 65));
+        cb_maquinaRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_maquinaRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        cb_maquinaRegrav.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*" }));
+
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("RP:");
+
+        txt_qtdRegrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_qtdRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_qtdRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_qtdRegrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Qtd:");
+        jLabel21.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel21.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel21.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        jLabel22.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Máq:");
+        jLabel22.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel22.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel22.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        txt_montRegrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_montRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_montRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_montRegrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_montRegrav.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_montRegravKeyPressed(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText(".");
+
+        jLabel24.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Mt:");
+
+        txt_operadorRegrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_operadorRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_operadorRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_operadorRegrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_operadorRegrav.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(102, 102, 102), new java.awt.Color(0, 0, 0)));
+        txt_operadorRegrav.setEnabled(false);
+        txt_operadorRegrav.setFocusable(false);
+
+        jLabel25.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("Operador:");
+        jLabel25.setEnabled(false);
+        jLabel25.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel25.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel25.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        btn_operadorRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Atualiza_16.png"))); // NOI18N
+        btn_operadorRegrav.setToolTipText("Preencher com data atual");
+        btn_operadorRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_operadorRegrav.setBorderPainted(false);
+        btn_operadorRegrav.setMaximumSize(new java.awt.Dimension(30, 30));
+        btn_operadorRegrav.setMinimumSize(new java.awt.Dimension(30, 30));
+        btn_operadorRegrav.setPreferredSize(new java.awt.Dimension(30, 30));
+        btn_operadorRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_operadorRegravActionPerformed(evt);
+            }
+        });
+
+        btn_novoRegrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_novoRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        btn_novoRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar_32px.png"))); // NOI18N
+        btn_novoRegrav.setToolTipText("Adicionar novo!");
+        btn_novoRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_novoRegrav.setBorderPainted(false);
+        btn_novoRegrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_novoRegrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_novoRegrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_novoRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_novoRegravActionPerformed(evt);
+            }
+        });
+
+        btn_alteraRegrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_alteraRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Alterar_32px.png"))); // NOI18N
+        btn_alteraRegrav.setToolTipText("Alterar!");
+        btn_alteraRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_alteraRegrav.setBorderPainted(false);
+        btn_alteraRegrav.setEnabled(false);
+        btn_alteraRegrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_alteraRegrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_alteraRegrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_alteraRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alteraRegravActionPerformed(evt);
+            }
+        });
+
+        btn_excluiRegrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_excluiRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Remover_32px.png"))); // NOI18N
+        btn_excluiRegrav.setToolTipText("Excluir!");
+        btn_excluiRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_excluiRegrav.setBorderPainted(false);
+        btn_excluiRegrav.setEnabled(false);
+        btn_excluiRegrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_excluiRegrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_excluiRegrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_excluiRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_excluiRegravActionPerformed(evt);
+            }
+        });
+
+        btn_limpaRegrav.setBackground(new java.awt.Color(22, 22, 22));
+        btn_limpaRegrav.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Limpar_32px.png"))); // NOI18N
+        btn_limpaRegrav.setToolTipText("Limpa tudo");
+        btn_limpaRegrav.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_limpaRegrav.setBorderPainted(false);
+        btn_limpaRegrav.setMaximumSize(new java.awt.Dimension(40, 40));
+        btn_limpaRegrav.setMinimumSize(new java.awt.Dimension(40, 40));
+        btn_limpaRegrav.setPreferredSize(new java.awt.Dimension(40, 40));
+        btn_limpaRegrav.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_limpaRegravActionPerformed(evt);
+            }
+        });
+
+        txt_codHcgRegrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_codHcgRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_codHcgRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_codHcgRegrav.setBorder(null);
+        txt_codHcgRegrav.setEnabled(false);
+        txt_codHcgRegrav.setFocusable(false);
+
+        txt_turnoRegrav.setBackground(new java.awt.Color(255, 255, 255, 0));
+        txt_turnoRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        txt_turnoRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_turnoRegrav.setBorder(null);
+        txt_turnoRegrav.setEnabled(false);
+        txt_turnoRegrav.setFocusable(false);
+
+        jLabel26.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("Apontamento:");
+        jLabel26.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel26.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel26.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        cb_apontamentoRegrav.setBackground(new java.awt.Color(65, 65, 65));
+        cb_apontamentoRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_apontamentoRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        cb_apontamentoRegrav.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*", "Vendas Cliente", "Programação", "Pré-Impressão", "Cópia de Chapa", "Impressão", "Outros" }));
+        cb_apontamentoRegrav.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_apontamentoRegravItemStateChanged(evt);
+            }
+        });
+
+        cb_descricaoRegrav.setBackground(new java.awt.Color(65, 65, 65));
+        cb_descricaoRegrav.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_descricaoRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        cb_descricaoRegrav.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*" }));
+
+        jLabel27.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("Descrição:");
+        jLabel27.setMaximumSize(new java.awt.Dimension(17, 15));
+        jLabel27.setMinimumSize(new java.awt.Dimension(17, 15));
+        jLabel27.setPreferredSize(new java.awt.Dimension(17, 15));
+
+        jLabel28.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("Observação:");
+
+        txt_obsRegrav.setBackground(new java.awt.Color(63, 63, 63));
+        txt_obsRegrav.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        txt_obsRegrav.setForeground(new java.awt.Color(255, 255, 255));
+        txt_obsRegrav.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txt_obsRegrav.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_obsRegravKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addComponent(txt_rpRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel23)
+                .addGap(0, 0, 0)
+                .addComponent(txt_montRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_buscaRpRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_qtdRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addComponent(cb_maquinaRegrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_operadorRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_operadorRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addComponent(txt_codCadchRegrav)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_codHcgRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_turnoRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel8Layout.createSequentialGroup()
+                            .addComponent(btn_novoRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_alteraRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_excluiRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_limpaRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+            .addComponent(cb_apontamentoRegrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cb_descricaoRegrav, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel24))
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(txt_obsRegrav)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_rpRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_montRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscaRpRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(txt_qtdRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(cb_maquinaRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(cb_apontamentoRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(cb_descricaoRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(txt_obsRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_operadorRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_operadorRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_codCadchRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_codHcgRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_turnoRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_excluiRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_limpaRegrav, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btn_novoRegrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_alteraRegrav, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
+        );
+
         javax.swing.GroupLayout jPanelRegravLayout = new javax.swing.GroupLayout(jPanelRegrav);
         jPanelRegrav.setLayout(jPanelRegravLayout);
         jPanelRegravLayout.setHorizontalGroup(
             jPanelRegravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 996, Short.MAX_VALUE)
+            .addGroup(jPanelRegravLayout.createSequentialGroup()
+                .addGap(3, 3, 3)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
         );
         jPanelRegravLayout.setVerticalGroup(
             jPanelRegravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGroup(jPanelRegravLayout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanelRegravLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jPanelCard1.add(jPanelRegrav, "regrav");
@@ -1098,11 +1628,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelLote.setLayout(jPanelLoteLayout);
         jPanelLoteLayout.setHorizontalGroup(
             jPanelLoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 996, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanelLoteLayout.setVerticalGroup(
             jPanelLoteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jPanelCard1.add(jPanelLote, "lote");
@@ -1405,11 +1935,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     .addComponent(txt_motivoVend_cad)
                     .addComponent(txt_codVend_cad)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 432, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelVendasLayout.setVerticalGroup(
             jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollvendascliente, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollvendascliente, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelVendasLayout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1578,7 +2108,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelProgLayout.setVerticalGroup(
             jPanelProgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollprogramacao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollprogramacao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelProgLayout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1747,7 +2277,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelPreImpLayout.setVerticalGroup(
             jPanelPreImpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollpreimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollpreimpressao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelPreImpLayout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1916,7 +2446,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelCopiaLayout.setVerticalGroup(
             jPanelCopiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollcopiachapa, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollcopiachapa, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelCopiaLayout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2085,7 +2615,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelImpressLayout.setVerticalGroup(
             jPanelImpressLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollimpressao, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollimpressao, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelImpressLayout.createSequentialGroup()
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2254,7 +2784,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelOutrosLayout.setVerticalGroup(
             jPanelOutrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrolloutros, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrolloutros, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelOutrosLayout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2423,7 +2953,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
         jPanelMaquinaLayout.setVerticalGroup(
             jPanelMaquinaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollmaquina, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+            .addComponent(jScrollmaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanelMaquinaLayout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2462,17 +2992,60 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jPanelCard1.add(jPanelAjustes, "ajustes");
         jPanelAjustes.getAccessibleContext().setAccessibleName("ajustes");
 
+        jPanel4.setBackground(new java.awt.Color(65, 65, 65));
+
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel18.setText("TURNO");
+
+        cb_turno.setBackground(new java.awt.Color(65, 65, 65));
+        cb_turno.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        cb_turno.setForeground(new java.awt.Color(255, 255, 255));
+        cb_turno.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "*", "1", "2" }));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/CartonDruck 3D.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel18)
+                    .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel19)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel18)
+                .addGap(0, 0, 0)
+                .addComponent(cb_turno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanelCard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelCard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2633,6 +3206,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
 
         listarGravacao();
+        listarRegravacao();
         listarVendasCliente();
         listarProgramacao();
         listarPreImpressao();
@@ -3207,7 +3781,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_novoGravActionPerformed
 
-    private void btn_preencheDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_preencheDataActionPerformed
+    private void btn_operadorGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_operadorGravActionPerformed
 
         txt_operadorGrav.setText("");
 
@@ -3218,7 +3792,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
             txt_operadorGrav.setText(c.getNomeoperador().toString());
 
         }
-    }//GEN-LAST:event_btn_preencheDataActionPerformed
+    }//GEN-LAST:event_btn_operadorGravActionPerformed
 
     private void btn_limpaGravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpaGravActionPerformed
 
@@ -3355,8 +3929,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscaRpGravActionPerformed
 
     private void txt_rpGravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rpGravKeyPressed
-        
-if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             PesquisarGravacao();
         }
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -3364,6 +3938,325 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             PesquisarGravacao();
         }
     }//GEN-LAST:event_txt_rpGravKeyPressed
+
+    private void tb_regravMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_regravMouseClicked
+
+        tb_regrav.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    datacriacao = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 10).toString();
+                    String rp[] = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 1).toString().replace(".", "_").split("_");
+
+                    String c0 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 0).toString();
+                    //String c1 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 1).toString();
+                    //String c2 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 2).toString();
+                    String c3 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 3).toString();
+                    String c4 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 4).toString();
+                    String c5 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 5).toString();
+                    String c6 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 6).toString();
+                    String c7 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 7).toString();
+                    String c8 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 8).toString();
+                    String c9 = "";
+                    if (tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 9) == null) {
+                        c9 = "";
+                    } else {
+                        c9 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 9).toString();
+                    }
+
+                    //String c10 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 10).toString();
+                    //String c11 = tb_regrav.getValueAt(tb_regrav.getSelectedRow(), 11).toString();
+                    txt_codCadchRegrav.setText(c0);
+                    txt_rpRegrav.setText(rp[0]);
+                    txt_montRegrav.setText(rp[1]);
+                    txt_qtdRegrav.setText(c3);
+                    txt_codHcgRegrav.setText(c5);
+                    txt_turnoRegrav.setText(c4);
+                    cb_maquinaRegrav.setSelectedItem(c6);
+                    cb_apontamentoRegrav.setSelectedItem(c7);
+                    cb_descricaoRegrav.setSelectedItem(c8);
+                    txt_obsRegrav.setText(c9);
+
+                    HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                    List<HorasCompGraf> lista = dao.BuscaOperador(rp[0]);
+
+                    for (HorasCompGraf c : lista) {
+                        txt_operadorRegrav.setText(c.getNomeoperador().toString());
+
+                    }
+
+                    btn_novoRegrav.setEnabled(false);
+                    btn_excluiRegrav.setEnabled(true);
+                    btn_alteraRegrav.setEnabled(true);
+                    btn_limpaRegrav.setEnabled(true);
+                }
+            }
+        });
+    }//GEN-LAST:event_tb_regravMouseClicked
+
+    private void txt_rpRegravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rpRegravKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            PesquisarRegravacao();
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txt_rpRegrav.setText("");
+            PesquisarRegravacao();
+        }
+    }//GEN-LAST:event_txt_rpRegravKeyPressed
+
+    private void btn_buscaRpRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscaRpRegravActionPerformed
+
+        PesquisarRegravacao();
+    }//GEN-LAST:event_btn_buscaRpRegravActionPerformed
+
+    private void txt_montRegravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_montRegravKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_montRegravKeyPressed
+
+    private void btn_operadorRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_operadorRegravActionPerformed
+
+        txt_operadorRegrav.setText("");
+
+        HorasCompGrafDAO dao = new HorasCompGrafDAO();
+        List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpRegrav.getText());
+
+        for (HorasCompGraf c : lista) {
+            txt_operadorRegrav.setText(c.getNomeoperador().toString());
+
+        }
+    }//GEN-LAST:event_btn_operadorRegravActionPerformed
+
+    private void btn_novoRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_novoRegravActionPerformed
+
+        if ("".equals(txt_rpRegrav.getText())) {
+            JOptionPane.showMessageDialog(null, "RP Inválida!", "", 2);
+        } else {
+            if ("".equals(txt_montRegrav.getText())) {
+                JOptionPane.showMessageDialog(null, "Montagem Iválida!", "", 2);
+            } else {
+                if ("".equals(txt_qtdRegrav.getText())) {
+                    JOptionPane.showMessageDialog(null, "Quantidade Iválida!", "", 2);
+                } else {
+                    if ("*".equals(cb_maquinaRegrav.getSelectedItem().toString())) {
+                        JOptionPane.showMessageDialog(null, "Maquina Iválida!", "", 2);
+                    } else {
+                        if ("*".equals(cb_apontamentoRegrav.getSelectedItem().toString())) {
+                            JOptionPane.showMessageDialog(null, "Apontamento Iválido!", "", 2);
+                        } else {
+                            if ("*".equals(cb_descricaoRegrav.getSelectedItem().toString())) {
+                                JOptionPane.showMessageDialog(null, "Descrição Iválida!", "", 2);
+                            } else {
+                                if ("".equals(txt_operadorRegrav.getText())) {
+                                    JOptionPane.showMessageDialog(null, "Operador Iválido!", "", 2);
+                                } else {
+                                    if ("*".equals(cb_turno.getSelectedItem().toString())) {
+                                        JOptionPane.showMessageDialog(null, "Turno Iválido!", "", 2);
+                                    } else {
+
+                                        int codhcg = 0;
+
+                                        HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                                        List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpRegrav.getText());
+
+                                        for (HorasCompGraf c : lista) {
+                                            codhcg = c.getCod_hcg();
+
+                                        }
+
+                                        CadastroChapa obj = new CadastroChapa();
+
+                                        obj.setOrdemprod(txt_rpRegrav.getText() + "." + txt_montRegrav.getText());
+                                        obj.setSituacao("Regravado");
+                                        obj.setQuantidade(Integer.parseInt(txt_qtdRegrav.getText()));
+                                        obj.setTurno(cb_turno.getSelectedItem().toString());
+                                        obj.setMaquina(cb_maquinaRegrav.getSelectedItem().toString());
+                                        obj.setCod_hcg(codhcg);
+                                        obj.setApontamento(cb_apontamentoRegrav.getSelectedItem().toString());
+                                        obj.setDescricao(cb_descricaoRegrav.getSelectedItem().toString());
+                                        if ("".equals(txt_obsRegrav.getText())) {
+                                            obj.setObs(null);
+                                        } else {
+                                            obj.setObs(txt_obsRegrav.getText());
+                                        }
+                                        obj.setCriado(Dh());
+                                        obj.setModificado(Dh());
+
+                                        CadastroChapaDAO dao2 = new CadastroChapaDAO();
+                                        dao2.cadastrar(obj);
+
+                                        LimparRegravacao();
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_novoRegravActionPerformed
+
+    private void btn_alteraRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteraRegravActionPerformed
+
+        if ("".equals(txt_rpRegrav.getText())) {
+            JOptionPane.showMessageDialog(null, "RP Inválida!", "", 2);
+        } else {
+            if ("".equals(txt_montRegrav.getText())) {
+                JOptionPane.showMessageDialog(null, "Montagem Iválida!", "", 2);
+            } else {
+                if ("".equals(txt_qtdRegrav.getText())) {
+                    JOptionPane.showMessageDialog(null, "Quantidade Iválida!", "", 2);
+                } else {
+                    if ("*".equals(cb_maquinaRegrav.getSelectedItem().toString())) {
+                        JOptionPane.showMessageDialog(null, "Maquina Iválida!", "", 2);
+                    } else {
+                        if ("*".equals(cb_apontamentoRegrav.getSelectedItem().toString())) {
+                            JOptionPane.showMessageDialog(null, "Apontamento Iválido!", "", 2);
+                        } else {
+                            if ("*".equals(cb_descricaoRegrav.getSelectedItem().toString())) {
+                                JOptionPane.showMessageDialog(null, "Descrição Iválida!", "", 2);
+                            } else {
+                                if ("".equals(txt_operadorRegrav.getText())) {
+                                    JOptionPane.showMessageDialog(null, "Operador Iválido!", "", 2);
+                                } else {
+                                    if ("*".equals(cb_turno.getSelectedItem().toString())) {
+                                        JOptionPane.showMessageDialog(null, "Turno Iválido!", "", 2);
+                                    } else {
+
+                                        int codhcg = 0;
+
+                                        HorasCompGrafDAO dao = new HorasCompGrafDAO();
+                                        List<HorasCompGraf> lista = dao.BuscaOperador(txt_rpRegrav.getText());
+
+                                        for (HorasCompGraf c : lista) {
+                                            codhcg = c.getCod_hcg();
+
+                                        }
+
+                                        CadastroChapa obj = new CadastroChapa();
+
+                                        obj.setOrdemprod(txt_rpRegrav.getText() + "." + txt_montRegrav.getText());
+                                        obj.setSituacao("Regravado");
+                                        obj.setQuantidade(Integer.parseInt(txt_qtdRegrav.getText()));
+                                        obj.setTurno(cb_turno.getSelectedItem().toString());
+                                        obj.setMaquina(cb_maquinaRegrav.getSelectedItem().toString());
+                                        obj.setCod_hcg(codhcg);
+                                        obj.setApontamento(cb_apontamentoRegrav.getSelectedItem().toString());
+                                        obj.setDescricao(cb_descricaoRegrav.getSelectedItem().toString());
+                                        if ("".equals(txt_obsRegrav.getText())) {
+                                            obj.setObs(null);
+                                        } else {
+                                            obj.setObs(txt_obsRegrav.getText());
+                                        }
+                                        obj.setCriado(datacriacao);
+                                        obj.setModificado(Dh());
+                                        obj.setCod_cadch(Integer.parseInt(txt_codCadchRegrav.getText()));
+
+                                        CadastroChapaDAO dao2 = new CadastroChapaDAO();
+                                        dao2.alterar(obj);
+
+                                        LimparRegravacao();
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_alteraRegravActionPerformed
+
+    private void btn_excluiRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_excluiRegravActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_excluiRegravActionPerformed
+
+    private void btn_limpaRegravActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpaRegravActionPerformed
+
+        LimparRegravacao();
+    }//GEN-LAST:event_btn_limpaRegravActionPerformed
+
+    private void txt_obsRegravKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_obsRegravKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_obsRegravKeyPressed
+
+    private void cb_apontamentoRegravItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_apontamentoRegravItemStateChanged
+
+        if (cb_apontamentoRegrav.getSelectedItem() == "Vendas Cliente") {
+            VendasClienteDAO dao = new VendasClienteDAO();
+            List<VendasCliente> lista = dao.listar();
+
+            cb_descricaoRegrav.removeAllItems();
+            cb_descricaoRegrav.addItem("*");
+
+            for (VendasCliente c : lista) {
+                cb_descricaoRegrav.addItem(c.getMotivo());
+            }
+        } else {
+            if (cb_apontamentoRegrav.getSelectedItem() == "Programação") {
+                ProgramacaoDAO dao = new ProgramacaoDAO();
+                List<Programacao> lista = dao.listar();
+
+                cb_descricaoRegrav.removeAllItems();
+                cb_descricaoRegrav.addItem("*");
+
+                for (Programacao c : lista) {
+                    cb_descricaoRegrav.addItem(c.getMotivo());
+                }
+            } else {
+                if (cb_apontamentoRegrav.getSelectedItem() == "Pré-Impressão") {
+                    PreImpressaoDAO dao = new PreImpressaoDAO();
+                    List<PreImpressao> lista = dao.listar();
+
+                    cb_descricaoRegrav.removeAllItems();
+                    cb_descricaoRegrav.addItem("*");
+
+                    for (PreImpressao c : lista) {
+                        cb_descricaoRegrav.addItem(c.getMotivo());
+                    }
+                } else {
+                    if (cb_apontamentoRegrav.getSelectedItem() == "Cópia de Chapa") {
+                        CopiaChapaDAO dao = new CopiaChapaDAO();
+                        List<CopiaChapa> lista = dao.listar();
+
+                        cb_descricaoRegrav.removeAllItems();
+                        cb_descricaoRegrav.addItem("*");
+
+                        for (CopiaChapa c : lista) {
+                            cb_descricaoRegrav.addItem(c.getMotivo());
+                        }
+                    } else {
+                        if (cb_apontamentoRegrav.getSelectedItem() == "Impressão") {
+                            ImpressaoDAO dao = new ImpressaoDAO();
+                            List<Impressao> lista = dao.listar();
+
+                            cb_descricaoRegrav.removeAllItems();
+                            cb_descricaoRegrav.addItem("*");
+
+                            for (Impressao c : lista) {
+                                cb_descricaoRegrav.addItem(c.getMotivo());
+                            }
+                        } else {
+                            if (cb_apontamentoRegrav.getSelectedItem() == "Outros") {
+                                OutrosDAO dao = new OutrosDAO();
+                                List<Outros> lista = dao.listar();
+
+                                cb_descricaoRegrav.removeAllItems();
+                                cb_descricaoRegrav.addItem("*");
+
+                                for (Outros c : lista) {
+                                    cb_descricaoRegrav.addItem(c.getMotivo());
+                                }
+                            } else {
+                                cb_descricaoRegrav.removeAllItems();
+                                cb_descricaoRegrav.addItem("*");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_cb_apontamentoRegravItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -3420,7 +4313,9 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JButton btn_altProg;
     private javax.swing.JButton btn_altVend;
     private javax.swing.JButton btn_alteraGrav;
+    private javax.swing.JButton btn_alteraRegrav;
     private javax.swing.JButton btn_buscaRpGrav;
+    private javax.swing.JButton btn_buscaRpRegrav;
     private javax.swing.JButton btn_exclCopChapa;
     private javax.swing.JButton btn_exclImp;
     private javax.swing.JButton btn_exclMaq;
@@ -3429,6 +4324,7 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JButton btn_exclProg;
     private javax.swing.JButton btn_exclVend;
     private javax.swing.JButton btn_excluiGrav;
+    private javax.swing.JButton btn_excluiRegrav;
     private javax.swing.JButton btn_limpCopChapa;
     private javax.swing.JButton btn_limpImp;
     private javax.swing.JButton btn_limpMaq;
@@ -3437,9 +4333,15 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JButton btn_limpProg;
     private javax.swing.JButton btn_limpVend;
     private javax.swing.JButton btn_limpaGrav;
+    private javax.swing.JButton btn_limpaRegrav;
     private javax.swing.JButton btn_novoGrav;
-    private javax.swing.JButton btn_preencheData;
+    private javax.swing.JButton btn_novoRegrav;
+    private javax.swing.JButton btn_operadorGrav;
+    private javax.swing.JButton btn_operadorRegrav;
+    public javax.swing.JComboBox cb_apontamentoRegrav;
+    public javax.swing.JComboBox cb_descricaoRegrav;
     public javax.swing.JComboBox cb_maquinaGrav;
+    public javax.swing.JComboBox cb_maquinaRegrav;
     public javax.swing.JComboBox cb_turno;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -3462,7 +4364,17 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -3473,8 +4385,11 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelAjustes;
     private javax.swing.JPanel jPanelCard1;
     private javax.swing.JPanel jPanelCard2;
@@ -3488,6 +4403,7 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JPanel jPanelProg;
     private javax.swing.JPanel jPanelRegrav;
     private javax.swing.JPanel jPanelVendas;
+    private javax.swing.JScrollPane jScrollRegrav;
     private javax.swing.JScrollPane jScrollcopiachapa;
     private javax.swing.JScrollPane jScrollgrav;
     private javax.swing.JScrollPane jScrollimpressao;
@@ -3503,10 +4419,13 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JTable tb_outros;
     private javax.swing.JTable tb_preImpressao;
     private javax.swing.JTable tb_programacao;
+    private javax.swing.JTable tb_regrav;
     private javax.swing.JTable tb_vendascliente;
     public javax.swing.JTextField txt_codCadchGrav;
+    public javax.swing.JTextField txt_codCadchRegrav;
     private javax.swing.JTextField txt_codCopChapa_cad;
     public javax.swing.JTextField txt_codHcgGrav;
+    public javax.swing.JTextField txt_codHcgRegrav;
     private javax.swing.JTextField txt_codImp_cad;
     private javax.swing.JTextField txt_codMaq_cad;
     private javax.swing.JTextField txt_codOut_cad;
@@ -3514,6 +4433,7 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JTextField txt_codProg_cad;
     private javax.swing.JTextField txt_codVend_cad;
     public javax.swing.JTextField txt_montGrav;
+    public javax.swing.JTextField txt_montRegrav;
     private javax.swing.JTextField txt_motivoCopChapa_cad;
     private javax.swing.JTextField txt_motivoImp_cad;
     private javax.swing.JTextField txt_motivoOut_cad;
@@ -3521,9 +4441,14 @@ if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
     private javax.swing.JTextField txt_motivoProg_cad;
     private javax.swing.JTextField txt_motivoVend_cad;
     private javax.swing.JTextField txt_nomeMaq_cad;
+    public javax.swing.JTextField txt_obsRegrav;
     public javax.swing.JTextField txt_operadorGrav;
+    public javax.swing.JTextField txt_operadorRegrav;
     public javax.swing.JTextField txt_qtdGrav;
+    public javax.swing.JTextField txt_qtdRegrav;
     public javax.swing.JTextField txt_rpGrav;
+    public javax.swing.JTextField txt_rpRegrav;
     public javax.swing.JTextField txt_turnoGrav;
+    public javax.swing.JTextField txt_turnoRegrav;
     // End of variables declaration//GEN-END:variables
 }
